@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Віртуальне середовище
+.venv/
+venv/
+
+# Кеш Ruff
+.ruff_cache/
+
+# Дані з хешами паролів та логи (не публікуємо!)
+labs/lab01/data/
+
+# IDE та системні файли
+.vscode/
+.idea/
+.DS_Store
