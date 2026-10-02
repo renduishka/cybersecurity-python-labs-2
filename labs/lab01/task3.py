@@ -162,11 +162,11 @@ def test_hash_errors():
 
 def test_logins():
     attempts = (
-        ("alice", "Al1ce@SecurePass"),
         ("alice", "Wrong@Password123"),
         ("unknown", "Some@Password123"),
         ("bob", "short"),
         ("", "Anything@12345678"),
+        ("alice", "Al1ce@SecurePass"),
     )
     print("Спроби входу:")
     for username, password in attempts:
@@ -188,7 +188,6 @@ def main():
     print(f"Алгоритм: {HASH_ALGORITHM}, сіль: {SALT}\n")
 
     users_to_register = (
-        ("alice", "Al1ce@SecurePass"),
         ("bob", "B0b#Strong_Key2026"),
         ("charlie", "Ch@rlie_Passw0rd"),
         ("diana", "D1ana$Secret_Key"),
@@ -197,8 +196,8 @@ def main():
         ("grace", "Gr4ce%Long_Pass!"),
         ("henry", "H3nry&Salt_Pepper"),
         ("irene", "Ir3ne*Secure_2026"),
-        ("jack", "J4ck^Quantum_Key"), 
-        ("Yummy", "Ababalamaga!hsjfnf"),
+        ("jack", "J4ck^Quantum_Key"),
+        ("alice", "Al1ce@SecurePass"),
     )
 
     try:
