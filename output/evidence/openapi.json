@@ -1,0 +1,874 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Реєстр ризиків хмарної конфігурації",
+    "description": "Облік навчальних знахідок аудиту хмарної конфігурації. Категорії: iam, storage, network. value — оцінка ризику від 0 до 10; status — стан опрацювання. Оцінки не є розрахунком за стандартом CVSS. Одиниця: score. Поріг: 7.0; вибірка: /records?min_value=7.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/categories": {
+      "get": {
+        "tags": [
+          "Категорії"
+        ],
+        "summary": "Список напрямів аудиту",
+        "description": "Повернути категорії за зростанням id.",
+        "operationId": "list_categories_categories_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CategoryRead"
+                  },
+                  "type": "array",
+                  "title": "Response List Categories Categories Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Категорії"
+        ],
+        "summary": "Створити напрям аудиту",
+        "description": "Створити категорію з унікальною назвою.",
+        "operationId": "create_category_categories_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryRead"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Назва вже існує"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{category_id}": {
+      "delete": {
+        "tags": [
+          "Категорії"
+        ],
+        "summary": "Видалити порожню категорію",
+        "description": "Не дозволяти видалення категорії, яка має записи.",
+        "operationId": "delete_category_categories__category_id__delete",
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "exclusiveMinimum": 0,
+              "description": "Додатний id категорії",
+              "title": "Category Id"
+            },
+            "description": "Додатний id категорії"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Категорію не знайдено"
+          },
+          "409": {
+            "description": "Категорія містить записи"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/records": {
+      "get": {
+        "tags": [
+          "Знахідки"
+        ],
+        "summary": "Знайти знахідки з фільтрами",
+        "description": "Поєднати задані умови через AND, сортувати за id.",
+        "operationId": "list_records_records_get",
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 9223372036854775807,
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Напрям аудиту",
+              "title": "Category Id"
+            },
+            "description": "Напрям аудиту"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "new",
+                    "in_progress",
+                    "done"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Стан опрацювання",
+              "title": "Status"
+            },
+            "description": "Стан опрацювання"
+          },
+          {
+            "name": "min_value",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "maximum": 10.0,
+                  "minimum": 0.0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Мінімальна оцінка ризику (score)",
+              "title": "Min Value"
+            },
+            "description": "Мінімальна оцінка ризику (score)"
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Буквальний підрядок title з урахуванням регістру",
+              "title": "Q"
+            },
+            "description": "Буквальний підрядок title з урахуванням регістру"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Розмір сторінки",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Розмір сторінки"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "minimum": 0,
+              "description": "Кількість пропущених записів",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Кількість пропущених записів"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RecordRead"
+                  },
+                  "title": "Response List Records Records Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Знахідки"
+        ],
+        "summary": "Створити знахідку",
+        "description": "Додати знахідку для наявної категорії.",
+        "operationId": "create_record_records_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordRead"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Запис або категорію не знайдено"
+          },
+          "409": {
+            "description": "Унікальний code вже існує"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/records/bulk": {
+      "post": {
+        "tags": [
+          "Знахідки"
+        ],
+        "summary": "Створити пакет атомарно",
+        "description": "Валідувати весь масив; за будь-якої помилки скасувати весь пакет.",
+        "operationId": "create_bulk_records_bulk_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/RecordCreate"
+                },
+                "type": "array",
+                "maxItems": 100,
+                "minItems": 1,
+                "title": "Records"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RecordRead"
+                  },
+                  "type": "array",
+                  "title": "Response Create Bulk Records Bulk Post"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Запис або категорію не знайдено"
+          },
+          "409": {
+            "description": "Унікальний code вже існує"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/records/{record_id}": {
+      "get": {
+        "tags": [
+          "Знахідки"
+        ],
+        "summary": "Отримати знахідку за id",
+        "description": "Повернути знахідку з назвою категорії.",
+        "operationId": "get_record_records__record_id__get",
+        "parameters": [
+          {
+            "name": "record_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "exclusiveMinimum": 0,
+              "description": "Додатний id знахідки",
+              "title": "Record Id"
+            },
+            "description": "Додатний id знахідки"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordRead"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Запис або категорію не знайдено"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Знахідки"
+        ],
+        "summary": "Повністю замінити поля знахідки",
+        "description": "Оновити п'ять полів; id залишається незмінним.",
+        "operationId": "replace_record_records__record_id__put",
+        "parameters": [
+          {
+            "name": "record_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "exclusiveMinimum": 0,
+              "description": "Додатний id знахідки",
+              "title": "Record Id"
+            },
+            "description": "Додатний id знахідки"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordReplace"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordRead"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Запис або категорію не знайдено"
+          },
+          "409": {
+            "description": "Унікальний code вже існує"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Знахідки"
+        ],
+        "summary": "Видалити знахідку",
+        "description": "Видалити запис і повернути порожню відповідь.",
+        "operationId": "delete_record_records__record_id__delete",
+        "parameters": [
+          {
+            "name": "record_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 9223372036854775807,
+              "exclusiveMinimum": 0,
+              "description": "Додатний id знахідки",
+              "title": "Record Id"
+            },
+            "description": "Додатний id знахідки"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Запис або категорію не знайдено"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ping": {
+      "get": {
+        "tags": [
+          "Службові"
+        ],
+        "summary": "Перевірити доступність",
+        "description": "Повернути ознаку доступності API.",
+        "operationId": "ping_ping_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PingRead"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/student": {
+      "get": {
+        "tags": [
+          "Службові"
+        ],
+        "summary": "Дані студента",
+        "description": "Прочитати дані виконавця зі спільного пакета.",
+        "operationId": "student_student_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentRead"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CategoryCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "CategoryCreate",
+        "description": "Назва напряму аудиту."
+      },
+      "CategoryRead": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Name"
+          },
+          "id": {
+            "type": "integer",
+            "maximum": 9.223372036854776e+18,
+            "exclusiveMinimum": 0.0,
+            "title": "Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "id"
+        ],
+        "title": "CategoryRead",
+        "description": "Категорія з ідентифікатором SQLite."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "PingRead": {
+        "properties": {
+          "status": {
+            "const": "ok",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "PingRead",
+        "description": "Ознака доступності API."
+      },
+      "RecordCreate": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 3,
+            "title": "Code",
+            "examples": [
+              "V13-TEST"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 3,
+            "title": "Title"
+          },
+          "category_id": {
+            "type": "integer",
+            "maximum": 9.223372036854776e+18,
+            "exclusiveMinimum": 0.0,
+            "title": "Category Id",
+            "description": "Ідентифікатор напряму аудиту"
+          },
+          "value": {
+            "type": "number",
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "title": "Value",
+            "description": "Навчальна оцінка ризику, score (0–10)"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "new",
+              "in_progress",
+              "done"
+            ],
+            "title": "Status"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "title",
+          "category_id",
+          "value",
+          "status"
+        ],
+        "title": "RecordCreate",
+        "description": "Новий результат аудиту; id визначає база."
+      },
+      "RecordRead": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 3,
+            "title": "Code",
+            "examples": [
+              "V13-TEST"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 3,
+            "title": "Title"
+          },
+          "category_id": {
+            "type": "integer",
+            "maximum": 9.223372036854776e+18,
+            "exclusiveMinimum": 0.0,
+            "title": "Category Id",
+            "description": "Ідентифікатор напряму аудиту"
+          },
+          "value": {
+            "type": "number",
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "title": "Value",
+            "description": "Навчальна оцінка ризику, score (0–10)"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "new",
+              "in_progress",
+              "done"
+            ],
+            "title": "Status"
+          },
+          "id": {
+            "type": "integer",
+            "maximum": 9.223372036854776e+18,
+            "exclusiveMinimum": 0.0,
+            "title": "Id"
+          },
+          "category_name": {
+            "type": "string",
+            "title": "Category Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "title",
+          "category_id",
+          "value",
+          "status",
+          "id",
+          "category_name"
+        ],
+        "title": "RecordRead",
+        "description": "Результат JOIN із назвою категорії."
+      },
+      "RecordReplace": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 3,
+            "title": "Code",
+            "examples": [
+              "V13-TEST"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 3,
+            "title": "Title"
+          },
+          "category_id": {
+            "type": "integer",
+            "maximum": 9.223372036854776e+18,
+            "exclusiveMinimum": 0.0,
+            "title": "Category Id",
+            "description": "Ідентифікатор напряму аудиту"
+          },
+          "value": {
+            "type": "number",
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "title": "Value",
+            "description": "Навчальна оцінка ризику, score (0–10)"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "new",
+              "in_progress",
+              "done"
+            ],
+            "title": "Status"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "title",
+          "category_id",
+          "value",
+          "status"
+        ],
+        "title": "RecordReplace",
+        "description": "Повна заміна всіх п'яти змінюваних полів запису."
+      },
+      "StudentRead": {
+        "properties": {
+          "student_name": {
+            "type": "string",
+            "title": "Student Name"
+          },
+          "group_name": {
+            "type": "string",
+            "title": "Group Name"
+          },
+          "variant_number": {
+            "type": "integer",
+            "title": "Variant Number"
+          }
+        },
+        "type": "object",
+        "required": [
+          "student_name",
+          "group_name",
+          "variant_number"
+        ],
+        "title": "StudentRead",
+        "description": "Відомості про виконавця."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

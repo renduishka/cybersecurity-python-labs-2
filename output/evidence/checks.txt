@@ -1,0 +1,18 @@
+$ ruff check labs/lab03
+All checks passed!
+
+$ ruff format --check labs/lab03
+11 files already formatted
+
+$ ruff check .
+All checks passed!
+
+$ ruff format --check .
+24 files already formatted
+
+$ python -m unittest discover -v
+Ran 11 tests
+OK
+
+$ python -m tests.verify_http
+PASS: 14 сценаріїв, 37 кроків. Перезапуск процесу перевірено.

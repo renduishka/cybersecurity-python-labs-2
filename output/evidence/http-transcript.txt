@@ -1,0 +1,144 @@
+Сценарій 1: Початкове та повторне заповнення
+{"first_inserted": true, "second_inserted": false, "categories": 3, "records": 8}
+
+Сценарій 2: Перевірка доступності
+GET /ping -> HTTP 200
+{"status": "ok"}
+
+Сценарій 2: Дані студента
+GET /student -> HTTP 200
+{"student_name": "Лозинський Ростислав Романович", "group_name": "КБ-202", "variant_number": 13}
+
+Сценарій 2: Напрями аудиту
+GET /categories -> HTTP 200
+[{"name": "iam", "id": 1}, {"name": "storage", "id": 2}, {"name": "network", "id": 3}]
+
+Сценарій 1: Початкові 8 знахідок
+GET /records?limit=100 -> HTTP 200
+[{"code": "V13-01", "title": "Знахідка хмарного аудиту 01", "category_id": 1, "value": 8.0, "status": "new", "id": 1, "category_name": "iam"}, {"code": "V13-02", "title": "Знахідка хмарного аудиту 02", "category_id": 2, "value": 6.5, "status": "in_progress", "id": 2, "category_name": "storage"}, {"code": "V13-03", "title": "Знахідка хмарного аудиту 03", "category_id": 3, "value": 4.0, "status": "done", "id": 3, "category_name": "network"}, {"code": "V13-04", "title": "Знахідка хмарного аудиту 04", "category_id": 1, "value": 9.0, "status": "new", "id": 4, "category_name": "iam"}, {"code": "V13-05", "title": "Знахідка хмарного аудиту 05", "category_id": 2, "value": 7.5, "status": "done", "id": 5, "category_name": "storage"}, {"code": "V13-06", "title": "Знахідка хмарного аудиту 06", "category_id": 3, "value": 3.0, "status": "in_progress", "id": 6, "category_name": "network"}, {"code": "V13-07", "title": "Знахідка хмарного аудиту 07", "category_id": 1, "value": 7.0, "status": "done", "id": 7, "category_name": "iam"}, {"code": "V13-08", "title": "Знахідка хмарного аудиту 08", "category_id": 2, "value": 5.0, "status": "new", "id": 8, "category_name": "storage"}]
+
+Сценарій 3: Створення знахідки
+POST /records -> HTTP 201
+{"code": "V13-TEST", "title": "Навчальна знахідка", "category_id": 1, "value": 7.5, "status": "new", "id": 9, "category_name": "iam"}
+
+Сценарій 3: Читання знахідки
+GET /records/9 -> HTTP 200
+{"code": "V13-TEST", "title": "Навчальна знахідка", "category_id": 1, "value": 7.5, "status": "new", "id": 9, "category_name": "iam"}
+
+Сценарій 3: Повна заміна
+PUT /records/9 -> HTTP 200
+{"code": "V13-TEST", "title": "Навчальна знахідка", "category_id": 1, "value": 2.0, "status": "done", "id": 9, "category_name": "iam"}
+
+Сценарій 3: Видалення без тіла
+DELETE /records/9 -> HTTP 204
+null
+
+Сценарій 4: Фільтрація та пагінація
+GET /records?category_id=1 -> HTTP 200
+[{"code": "V13-01", "title": "Знахідка хмарного аудиту 01", "category_id": 1, "value": 8.0, "status": "new", "id": 1, "category_name": "iam"}, {"code": "V13-04", "title": "Знахідка хмарного аудиту 04", "category_id": 1, "value": 9.0, "status": "new", "id": 4, "category_name": "iam"}, {"code": "V13-07", "title": "Знахідка хмарного аудиту 07", "category_id": 1, "value": 7.0, "status": "done", "id": 7, "category_name": "iam"}]
+
+Сценарій 4: Фільтрація та пагінація
+GET /records?min_value=7 -> HTTP 200
+[{"code": "V13-01", "title": "Знахідка хмарного аудиту 01", "category_id": 1, "value": 8.0, "status": "new", "id": 1, "category_name": "iam"}, {"code": "V13-04", "title": "Знахідка хмарного аудиту 04", "category_id": 1, "value": 9.0, "status": "new", "id": 4, "category_name": "iam"}, {"code": "V13-05", "title": "Знахідка хмарного аудиту 05", "category_id": 2, "value": 7.5, "status": "done", "id": 5, "category_name": "storage"}, {"code": "V13-07", "title": "Знахідка хмарного аудиту 07", "category_id": 1, "value": 7.0, "status": "done", "id": 7, "category_name": "iam"}]
+
+Сценарій 4: Фільтрація та пагінація
+GET /records?category_id=1&status=new -> HTTP 200
+[{"code": "V13-01", "title": "Знахідка хмарного аудиту 01", "category_id": 1, "value": 8.0, "status": "new", "id": 1, "category_name": "iam"}, {"code": "V13-04", "title": "Знахідка хмарного аудиту 04", "category_id": 1, "value": 9.0, "status": "new", "id": 4, "category_name": "iam"}]
+
+Сценарій 4: Фільтрація та пагінація
+GET /records?limit=2&offset=2 -> HTTP 200
+[{"code": "V13-03", "title": "Знахідка хмарного аудиту 03", "category_id": 3, "value": 4.0, "status": "done", "id": 3, "category_name": "network"}, {"code": "V13-04", "title": "Знахідка хмарного аудиту 04", "category_id": 1, "value": 9.0, "status": "new", "id": 4, "category_name": "iam"}]
+
+Сценарій 4: Фільтрація та пагінація
+GET /records?q=аудиту%2002 -> HTTP 200
+[{"code": "V13-02", "title": "Знахідка хмарного аудиту 02", "category_id": 2, "value": 6.5, "status": "in_progress", "id": 2, "category_name": "storage"}]
+
+Сценарій 4: Фільтрація та пагінація
+GET /records?category_id=999 -> HTTP 200
+[]
+
+Сценарій 5: Невалідні поля
+POST /records -> HTTP 422
+{"detail": [{"type": "greater_than_equal", "loc": ["body", "value"], "msg": "Input should be greater than or equal to 0", "input": -1, "ctx": {"ge": 0.0}}]}
+
+Сценарій 5: Невалідні поля
+POST /records -> HTTP 422
+{"detail": [{"type": "string_too_short", "loc": ["body", "title"], "msg": "String should have at least 3 characters", "input": "   ", "ctx": {"min_length": 3}}]}
+
+Сценарій 5: Невалідні поля
+POST /records -> HTTP 422
+{"detail": [{"type": "literal_error", "loc": ["body", "status"], "msg": "Input should be 'new', 'in_progress' or 'done'", "input": "invalid", "ctx": {"expected": "'new', 'in_progress' or 'done'"}}]}
+
+Сценарій 5: Невалідний limit
+GET /records?limit=0 -> HTTP 422
+{"detail": [{"type": "greater_than_equal", "loc": ["query", "limit"], "msg": "Input should be greater than or equal to 1", "input": "0", "ctx": {"ge": 1}}]}
+
+Сценарій 6: Перевищення верхньої межі
+POST /records -> HTTP 422
+{"detail": [{"type": "less_than_equal", "loc": ["body", "value"], "msg": "Input should be less than or equal to 10", "input": 10.1, "ctx": {"le": 10.0}}]}
+
+Сценарій 6: Нескінченне число у JSON
+POST /records -> HTTP 422
+{"detail": [{"type": "finite_number", "loc": ["body", "value"], "msg": "Input should be a finite number", "input": "inf"}]}
+
+Сценарій 7: Відсутній запис
+GET /records/999 -> HTTP 404
+{"detail": "Запис не знайдено"}
+
+Сценарій 7: Відсутня категорія
+POST /records -> HTTP 404
+{"detail": "Категорію не знайдено"}
+
+Сценарій 8: Повторний code
+POST /records -> HTTP 409
+{"detail": "Конфлікт даних: дублікат або категорія містить записи"}
+
+Сценарій 8: Повторна назва категорії
+POST /categories -> HTTP 409
+{"detail": "Конфлікт даних: дублікат або категорія містить записи"}
+
+Сценарій 9: Захист непорожньої категорії
+DELETE /categories/1 -> HTTP 409
+{"detail": "Конфлікт даних: дублікат або категорія містить записи"}
+
+Сценарій 9: Створення порожньої категорії
+POST /categories -> HTTP 201
+{"name": "temporary", "id": 4}
+
+Сценарій 9: Видалення порожньої категорії
+DELETE /categories/4 -> HTTP 204
+null
+
+Сценарій 10: Коректний пакет
+POST /records/bulk -> HTTP 201
+[{"code": "V13-BULK1", "title": "Навчальна знахідка", "category_id": 1, "value": 7.5, "status": "new", "id": 9, "category_name": "iam"}, {"code": "V13-BULK2", "title": "Навчальна знахідка", "category_id": 2, "value": 5.0, "status": "new", "id": 10, "category_name": "storage"}]
+
+Сценарій 11: Скасування всього пакета
+POST /records/bulk -> HTTP 409
+{"detail": "Конфлікт даних: дублікат або категорія містить записи"}
+
+Сценарій 11: Стан після rollback
+{"count_before": 10, "count_after": 10, "first_code": "V13-ROLLBACK11", "first_code_exists": false}
+
+Сценарій 12: Скасування всього пакета
+POST /records/bulk -> HTTP 404
+{"detail": "Категорію не знайдено"}
+
+Сценарій 12: Стан після rollback
+{"count_before": 10, "count_after": 10, "first_code": "V13-ROLLBACK12", "first_code_exists": false}
+
+Сценарій 13: SQL-ін'єкція як буквальний підрядок
+GET /records?q=%27%20OR%201%3D1%20-- -> HTTP 200
+[]
+
+Сценарій 14: Збереження перед перезапуском
+POST /records -> HTTP 201
+{"code": "V13-PERSIST", "title": "Навчальна знахідка", "category_id": 3, "value": 7.5, "status": "new", "id": 11, "category_name": "network"}
+
+Сценарій 14: Читання після перезапуску процесу
+GET /records/11 -> HTTP 200
+{"code": "V13-PERSIST", "title": "Навчальна знахідка", "category_id": 3, "value": 7.5, "status": "new", "id": 11, "category_name": "network"}
+
+Сценарій 14: Підсумкові дані
+GET /records?limit=100 -> HTTP 200
+[{"code": "V13-01", "title": "Знахідка хмарного аудиту 01", "category_id": 1, "value": 8.0, "status": "new", "id": 1, "category_name": "iam"}, {"code": "V13-02", "title": "Знахідка хмарного аудиту 02", "category_id": 2, "value": 6.5, "status": "in_progress", "id": 2, "category_name": "storage"}, {"code": "V13-03", "title": "Знахідка хмарного аудиту 03", "category_id": 3, "value": 4.0, "status": "done", "id": 3, "category_name": "network"}, {"code": "V13-04", "title": "Знахідка хмарного аудиту 04", "category_id": 1, "value": 9.0, "status": "new", "id": 4, "category_name": "iam"}, {"code": "V13-05", "title": "Знахідка хмарного аудиту 05", "category_id": 2, "value": 7.5, "status": "done", "id": 5, "category_name": "storage"}, {"code": "V13-06", "title": "Знахідка хмарного аудиту 06", "category_id": 3, "value": 3.0, "status": "in_progress", "id": 6, "category_name": "network"}, {"code": "V13-07", "title": "Знахідка хмарного аудиту 07", "category_id": 1, "value": 7.0, "status": "done", "id": 7, "category_name": "iam"}, {"code": "V13-08", "title": "Знахідка хмарного аудиту 08", "category_id": 2, "value": 5.0, "status": "new", "id": 8, "category_name": "storage"}, {"code": "V13-BULK1", "title": "Навчальна знахідка", "category_id": 1, "value": 7.5, "status": "new", "id": 9, "category_name": "iam"}, {"code": "V13-BULK2", "title": "Навчальна знахідка", "category_id": 2, "value": 5.0, "status": "new", "id": 10, "category_name": "storage"}, {"code": "V13-PERSIST", "title": "Навчальна знахідка", "category_id": 3, "value": 7.5, "status": "new", "id": 11, "category_name": "network"}]

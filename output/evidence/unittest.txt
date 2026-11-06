@@ -1,0 +1,22 @@
+test_bulk_success_and_rollback (tests.test_lab03.Lab03Tests) ... Порушення цілісності SQLite: UNIQUE constraint failed: records.code
+Порушення цілісності SQLite: UNIQUE constraint failed: records.code
+ok
+test_categories (tests.test_lab03.Lab03Tests) ... Порушення цілісності SQLite: FOREIGN KEY constraint failed
+ok
+test_crud (tests.test_lab03.Lab03Tests) ... ok
+test_filters_pagination_and_literal_search (tests.test_lab03.Lab03Tests) ... ok
+test_foreign_keys_and_constraints (tests.test_lab03.Lab03Tests) ... ok
+test_invalid_seed_rolls_back_and_nonempty_is_preserved (tests.test_lab03.Lab03Tests) ... ok
+test_not_found_and_unique_conflicts (tests.test_lab03.Lab03Tests) ... Порушення цілісності SQLite: UNIQUE constraint failed: records.code
+Порушення цілісності SQLite: UNIQUE constraint failed: records.code
+Порушення цілісності SQLite: UNIQUE constraint failed: categories.name
+ok
+test_persistence_after_lifespan_restart (tests.test_lab03.Lab03Tests) ... ok
+test_seed_and_identity (tests.test_lab03.Lab03Tests) ... ok
+test_sqlite_integer_overflow_is_validation_error (tests.test_lab03.Lab03Tests) ... ok
+test_validation_leaves_database_unchanged (tests.test_lab03.Lab03Tests) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.517s
+
+OK

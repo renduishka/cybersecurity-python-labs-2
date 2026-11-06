@@ -1,0 +1,909 @@
+[
+  {
+    "scenario": 1,
+    "label": "Початкове та повторне заповнення",
+    "result": {
+      "first_inserted": true,
+      "second_inserted": false,
+      "categories": 3,
+      "records": 8
+    }
+  },
+  {
+    "scenario": 2,
+    "label": "Перевірка доступності",
+    "method": "GET",
+    "path": "/ping",
+    "request": null,
+    "status": 200,
+    "response": {
+      "status": "ok"
+    }
+  },
+  {
+    "scenario": 2,
+    "label": "Дані студента",
+    "method": "GET",
+    "path": "/student",
+    "request": null,
+    "status": 200,
+    "response": {
+      "student_name": "Лозинський Ростислав Романович",
+      "group_name": "КБ-202",
+      "variant_number": 13
+    }
+  },
+  {
+    "scenario": 2,
+    "label": "Напрями аудиту",
+    "method": "GET",
+    "path": "/categories",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "name": "iam",
+        "id": 1
+      },
+      {
+        "name": "storage",
+        "id": 2
+      },
+      {
+        "name": "network",
+        "id": 3
+      }
+    ]
+  },
+  {
+    "scenario": 1,
+    "label": "Початкові 8 знахідок",
+    "method": "GET",
+    "path": "/records?limit=100",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "code": "V13-01",
+        "title": "Знахідка хмарного аудиту 01",
+        "category_id": 1,
+        "value": 8.0,
+        "status": "new",
+        "id": 1,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-02",
+        "title": "Знахідка хмарного аудиту 02",
+        "category_id": 2,
+        "value": 6.5,
+        "status": "in_progress",
+        "id": 2,
+        "category_name": "storage"
+      },
+      {
+        "code": "V13-03",
+        "title": "Знахідка хмарного аудиту 03",
+        "category_id": 3,
+        "value": 4.0,
+        "status": "done",
+        "id": 3,
+        "category_name": "network"
+      },
+      {
+        "code": "V13-04",
+        "title": "Знахідка хмарного аудиту 04",
+        "category_id": 1,
+        "value": 9.0,
+        "status": "new",
+        "id": 4,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-05",
+        "title": "Знахідка хмарного аудиту 05",
+        "category_id": 2,
+        "value": 7.5,
+        "status": "done",
+        "id": 5,
+        "category_name": "storage"
+      },
+      {
+        "code": "V13-06",
+        "title": "Знахідка хмарного аудиту 06",
+        "category_id": 3,
+        "value": 3.0,
+        "status": "in_progress",
+        "id": 6,
+        "category_name": "network"
+      },
+      {
+        "code": "V13-07",
+        "title": "Знахідка хмарного аудиту 07",
+        "category_id": 1,
+        "value": 7.0,
+        "status": "done",
+        "id": 7,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-08",
+        "title": "Знахідка хмарного аудиту 08",
+        "category_id": 2,
+        "value": 5.0,
+        "status": "new",
+        "id": 8,
+        "category_name": "storage"
+      }
+    ]
+  },
+  {
+    "scenario": 3,
+    "label": "Створення знахідки",
+    "method": "POST",
+    "path": "/records",
+    "request": {
+      "code": "V13-TEST",
+      "title": "Навчальна знахідка",
+      "category_id": 1,
+      "value": 7.5,
+      "status": "new"
+    },
+    "status": 201,
+    "response": {
+      "code": "V13-TEST",
+      "title": "Навчальна знахідка",
+      "category_id": 1,
+      "value": 7.5,
+      "status": "new",
+      "id": 9,
+      "category_name": "iam"
+    }
+  },
+  {
+    "scenario": 3,
+    "label": "Читання знахідки",
+    "method": "GET",
+    "path": "/records/9",
+    "request": null,
+    "status": 200,
+    "response": {
+      "code": "V13-TEST",
+      "title": "Навчальна знахідка",
+      "category_id": 1,
+      "value": 7.5,
+      "status": "new",
+      "id": 9,
+      "category_name": "iam"
+    }
+  },
+  {
+    "scenario": 3,
+    "label": "Повна заміна",
+    "method": "PUT",
+    "path": "/records/9",
+    "request": {
+      "code": "V13-TEST",
+      "title": "Навчальна знахідка",
+      "category_id": 1,
+      "value": 2,
+      "status": "done"
+    },
+    "status": 200,
+    "response": {
+      "code": "V13-TEST",
+      "title": "Навчальна знахідка",
+      "category_id": 1,
+      "value": 2.0,
+      "status": "done",
+      "id": 9,
+      "category_name": "iam"
+    }
+  },
+  {
+    "scenario": 3,
+    "label": "Видалення без тіла",
+    "method": "DELETE",
+    "path": "/records/9",
+    "request": null,
+    "status": 204,
+    "response": null
+  },
+  {
+    "scenario": 4,
+    "label": "Фільтрація та пагінація",
+    "method": "GET",
+    "path": "/records?category_id=1",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "code": "V13-01",
+        "title": "Знахідка хмарного аудиту 01",
+        "category_id": 1,
+        "value": 8.0,
+        "status": "new",
+        "id": 1,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-04",
+        "title": "Знахідка хмарного аудиту 04",
+        "category_id": 1,
+        "value": 9.0,
+        "status": "new",
+        "id": 4,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-07",
+        "title": "Знахідка хмарного аудиту 07",
+        "category_id": 1,
+        "value": 7.0,
+        "status": "done",
+        "id": 7,
+        "category_name": "iam"
+      }
+    ]
+  },
+  {
+    "scenario": 4,
+    "label": "Фільтрація та пагінація",
+    "method": "GET",
+    "path": "/records?min_value=7",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "code": "V13-01",
+        "title": "Знахідка хмарного аудиту 01",
+        "category_id": 1,
+        "value": 8.0,
+        "status": "new",
+        "id": 1,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-04",
+        "title": "Знахідка хмарного аудиту 04",
+        "category_id": 1,
+        "value": 9.0,
+        "status": "new",
+        "id": 4,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-05",
+        "title": "Знахідка хмарного аудиту 05",
+        "category_id": 2,
+        "value": 7.5,
+        "status": "done",
+        "id": 5,
+        "category_name": "storage"
+      },
+      {
+        "code": "V13-07",
+        "title": "Знахідка хмарного аудиту 07",
+        "category_id": 1,
+        "value": 7.0,
+        "status": "done",
+        "id": 7,
+        "category_name": "iam"
+      }
+    ]
+  },
+  {
+    "scenario": 4,
+    "label": "Фільтрація та пагінація",
+    "method": "GET",
+    "path": "/records?category_id=1&status=new",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "code": "V13-01",
+        "title": "Знахідка хмарного аудиту 01",
+        "category_id": 1,
+        "value": 8.0,
+        "status": "new",
+        "id": 1,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-04",
+        "title": "Знахідка хмарного аудиту 04",
+        "category_id": 1,
+        "value": 9.0,
+        "status": "new",
+        "id": 4,
+        "category_name": "iam"
+      }
+    ]
+  },
+  {
+    "scenario": 4,
+    "label": "Фільтрація та пагінація",
+    "method": "GET",
+    "path": "/records?limit=2&offset=2",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "code": "V13-03",
+        "title": "Знахідка хмарного аудиту 03",
+        "category_id": 3,
+        "value": 4.0,
+        "status": "done",
+        "id": 3,
+        "category_name": "network"
+      },
+      {
+        "code": "V13-04",
+        "title": "Знахідка хмарного аудиту 04",
+        "category_id": 1,
+        "value": 9.0,
+        "status": "new",
+        "id": 4,
+        "category_name": "iam"
+      }
+    ]
+  },
+  {
+    "scenario": 4,
+    "label": "Фільтрація та пагінація",
+    "method": "GET",
+    "path": "/records?q=аудиту%2002",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "code": "V13-02",
+        "title": "Знахідка хмарного аудиту 02",
+        "category_id": 2,
+        "value": 6.5,
+        "status": "in_progress",
+        "id": 2,
+        "category_name": "storage"
+      }
+    ]
+  },
+  {
+    "scenario": 4,
+    "label": "Фільтрація та пагінація",
+    "method": "GET",
+    "path": "/records?category_id=999",
+    "request": null,
+    "status": 200,
+    "response": []
+  },
+  {
+    "scenario": 5,
+    "label": "Невалідні поля",
+    "method": "POST",
+    "path": "/records",
+    "request": {
+      "code": "V13-BAD",
+      "title": "Навчальна знахідка",
+      "category_id": 1,
+      "value": -1,
+      "status": "new"
+    },
+    "status": 422,
+    "response": {
+      "detail": [
+        {
+          "type": "greater_than_equal",
+          "loc": [
+            "body",
+            "value"
+          ],
+          "msg": "Input should be greater than or equal to 0",
+          "input": -1,
+          "ctx": {
+            "ge": 0.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "scenario": 5,
+    "label": "Невалідні поля",
+    "method": "POST",
+    "path": "/records",
+    "request": {
+      "code": "V13-BAD",
+      "title": "   ",
+      "category_id": 1,
+      "value": 7.5,
+      "status": "new"
+    },
+    "status": 422,
+    "response": {
+      "detail": [
+        {
+          "type": "string_too_short",
+          "loc": [
+            "body",
+            "title"
+          ],
+          "msg": "String should have at least 3 characters",
+          "input": "   ",
+          "ctx": {
+            "min_length": 3
+          }
+        }
+      ]
+    }
+  },
+  {
+    "scenario": 5,
+    "label": "Невалідні поля",
+    "method": "POST",
+    "path": "/records",
+    "request": {
+      "code": "V13-BAD",
+      "title": "Навчальна знахідка",
+      "category_id": 1,
+      "value": 7.5,
+      "status": "invalid"
+    },
+    "status": 422,
+    "response": {
+      "detail": [
+        {
+          "type": "literal_error",
+          "loc": [
+            "body",
+            "status"
+          ],
+          "msg": "Input should be 'new', 'in_progress' or 'done'",
+          "input": "invalid",
+          "ctx": {
+            "expected": "'new', 'in_progress' or 'done'"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "scenario": 5,
+    "label": "Невалідний limit",
+    "method": "GET",
+    "path": "/records?limit=0",
+    "request": null,
+    "status": 422,
+    "response": {
+      "detail": [
+        {
+          "type": "greater_than_equal",
+          "loc": [
+            "query",
+            "limit"
+          ],
+          "msg": "Input should be greater than or equal to 1",
+          "input": "0",
+          "ctx": {
+            "ge": 1
+          }
+        }
+      ]
+    }
+  },
+  {
+    "scenario": 6,
+    "label": "Перевищення верхньої межі",
+    "method": "POST",
+    "path": "/records",
+    "request": {
+      "code": "V13-BAD",
+      "title": "Навчальна знахідка",
+      "category_id": 1,
+      "value": 10.1,
+      "status": "new"
+    },
+    "status": 422,
+    "response": {
+      "detail": [
+        {
+          "type": "less_than_equal",
+          "loc": [
+            "body",
+            "value"
+          ],
+          "msg": "Input should be less than or equal to 10",
+          "input": 10.1,
+          "ctx": {
+            "le": 10.0
+          }
+        }
+      ]
+    }
+  },
+  {
+    "scenario": 6,
+    "label": "Нескінченне число у JSON",
+    "method": "POST",
+    "path": "/records",
+    "request": "{\"code\": \"V13-INF\", \"title\": \"\\u041d\\u0430\\u0432\\u0447\\u0430\\u043b\\u044c\\u043d\\u0430 \\u0437\\u043d\\u0430\\u0445\\u0456\\u0434\\u043a\\u0430\", \"category_id\": 1, \"value\": 1e309, \"status\": \"new\"}",
+    "status": 422,
+    "response": {
+      "detail": [
+        {
+          "type": "finite_number",
+          "loc": [
+            "body",
+            "value"
+          ],
+          "msg": "Input should be a finite number",
+          "input": "inf"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": 7,
+    "label": "Відсутній запис",
+    "method": "GET",
+    "path": "/records/999",
+    "request": null,
+    "status": 404,
+    "response": {
+      "detail": "Запис не знайдено"
+    }
+  },
+  {
+    "scenario": 7,
+    "label": "Відсутня категорія",
+    "method": "POST",
+    "path": "/records",
+    "request": {
+      "code": "V13-NOCAT",
+      "title": "Навчальна знахідка",
+      "category_id": 999,
+      "value": 7.5,
+      "status": "new"
+    },
+    "status": 404,
+    "response": {
+      "detail": "Категорію не знайдено"
+    }
+  },
+  {
+    "scenario": 8,
+    "label": "Повторний code",
+    "method": "POST",
+    "path": "/records",
+    "request": {
+      "code": "V13-01",
+      "title": "Навчальна знахідка",
+      "category_id": 1,
+      "value": 7.5,
+      "status": "new"
+    },
+    "status": 409,
+    "response": {
+      "detail": "Конфлікт даних: дублікат або категорія містить записи"
+    }
+  },
+  {
+    "scenario": 8,
+    "label": "Повторна назва категорії",
+    "method": "POST",
+    "path": "/categories",
+    "request": {
+      "name": "iam"
+    },
+    "status": 409,
+    "response": {
+      "detail": "Конфлікт даних: дублікат або категорія містить записи"
+    }
+  },
+  {
+    "scenario": 9,
+    "label": "Захист непорожньої категорії",
+    "method": "DELETE",
+    "path": "/categories/1",
+    "request": null,
+    "status": 409,
+    "response": {
+      "detail": "Конфлікт даних: дублікат або категорія містить записи"
+    }
+  },
+  {
+    "scenario": 9,
+    "label": "Створення порожньої категорії",
+    "method": "POST",
+    "path": "/categories",
+    "request": {
+      "name": "temporary"
+    },
+    "status": 201,
+    "response": {
+      "name": "temporary",
+      "id": 4
+    }
+  },
+  {
+    "scenario": 9,
+    "label": "Видалення порожньої категорії",
+    "method": "DELETE",
+    "path": "/categories/4",
+    "request": null,
+    "status": 204,
+    "response": null
+  },
+  {
+    "scenario": 10,
+    "label": "Коректний пакет",
+    "method": "POST",
+    "path": "/records/bulk",
+    "request": [
+      {
+        "code": "V13-BULK1",
+        "title": "Навчальна знахідка",
+        "category_id": 1,
+        "value": 7.5,
+        "status": "new"
+      },
+      {
+        "code": "V13-BULK2",
+        "title": "Навчальна знахідка",
+        "category_id": 2,
+        "value": 5,
+        "status": "new"
+      }
+    ],
+    "status": 201,
+    "response": [
+      {
+        "code": "V13-BULK1",
+        "title": "Навчальна знахідка",
+        "category_id": 1,
+        "value": 7.5,
+        "status": "new",
+        "id": 9,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-BULK2",
+        "title": "Навчальна знахідка",
+        "category_id": 2,
+        "value": 5.0,
+        "status": "new",
+        "id": 10,
+        "category_name": "storage"
+      }
+    ]
+  },
+  {
+    "scenario": 11,
+    "label": "Скасування всього пакета",
+    "method": "POST",
+    "path": "/records/bulk",
+    "request": [
+      {
+        "code": "V13-ROLLBACK11",
+        "title": "Навчальна знахідка",
+        "category_id": 1,
+        "value": 7.5,
+        "status": "new"
+      },
+      {
+        "code": "V13-01",
+        "title": "Навчальна знахідка",
+        "category_id": 1,
+        "value": 7.5,
+        "status": "new"
+      }
+    ],
+    "status": 409,
+    "response": {
+      "detail": "Конфлікт даних: дублікат або категорія містить записи"
+    }
+  },
+  {
+    "scenario": 11,
+    "label": "Стан після rollback",
+    "result": {
+      "count_before": 10,
+      "count_after": 10,
+      "first_code": "V13-ROLLBACK11",
+      "first_code_exists": false
+    }
+  },
+  {
+    "scenario": 12,
+    "label": "Скасування всього пакета",
+    "method": "POST",
+    "path": "/records/bulk",
+    "request": [
+      {
+        "code": "V13-ROLLBACK12",
+        "title": "Навчальна знахідка",
+        "category_id": 1,
+        "value": 7.5,
+        "status": "new"
+      },
+      {
+        "code": "V13-NOCAT",
+        "title": "Навчальна знахідка",
+        "category_id": 999,
+        "value": 7.5,
+        "status": "new"
+      }
+    ],
+    "status": 404,
+    "response": {
+      "detail": "Категорію не знайдено"
+    }
+  },
+  {
+    "scenario": 12,
+    "label": "Стан після rollback",
+    "result": {
+      "count_before": 10,
+      "count_after": 10,
+      "first_code": "V13-ROLLBACK12",
+      "first_code_exists": false
+    }
+  },
+  {
+    "scenario": 13,
+    "label": "SQL-ін'єкція як буквальний підрядок",
+    "method": "GET",
+    "path": "/records?q=%27%20OR%201%3D1%20--",
+    "request": null,
+    "status": 200,
+    "response": []
+  },
+  {
+    "scenario": 14,
+    "label": "Збереження перед перезапуском",
+    "method": "POST",
+    "path": "/records",
+    "request": {
+      "code": "V13-PERSIST",
+      "title": "Навчальна знахідка",
+      "category_id": 3,
+      "value": 7.5,
+      "status": "new"
+    },
+    "status": 201,
+    "response": {
+      "code": "V13-PERSIST",
+      "title": "Навчальна знахідка",
+      "category_id": 3,
+      "value": 7.5,
+      "status": "new",
+      "id": 11,
+      "category_name": "network"
+    }
+  },
+  {
+    "scenario": 14,
+    "label": "Читання після перезапуску процесу",
+    "method": "GET",
+    "path": "/records/11",
+    "request": null,
+    "status": 200,
+    "response": {
+      "code": "V13-PERSIST",
+      "title": "Навчальна знахідка",
+      "category_id": 3,
+      "value": 7.5,
+      "status": "new",
+      "id": 11,
+      "category_name": "network"
+    }
+  },
+  {
+    "scenario": 14,
+    "label": "Підсумкові дані",
+    "method": "GET",
+    "path": "/records?limit=100",
+    "request": null,
+    "status": 200,
+    "response": [
+      {
+        "code": "V13-01",
+        "title": "Знахідка хмарного аудиту 01",
+        "category_id": 1,
+        "value": 8.0,
+        "status": "new",
+        "id": 1,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-02",
+        "title": "Знахідка хмарного аудиту 02",
+        "category_id": 2,
+        "value": 6.5,
+        "status": "in_progress",
+        "id": 2,
+        "category_name": "storage"
+      },
+      {
+        "code": "V13-03",
+        "title": "Знахідка хмарного аудиту 03",
+        "category_id": 3,
+        "value": 4.0,
+        "status": "done",
+        "id": 3,
+        "category_name": "network"
+      },
+      {
+        "code": "V13-04",
+        "title": "Знахідка хмарного аудиту 04",
+        "category_id": 1,
+        "value": 9.0,
+        "status": "new",
+        "id": 4,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-05",
+        "title": "Знахідка хмарного аудиту 05",
+        "category_id": 2,
+        "value": 7.5,
+        "status": "done",
+        "id": 5,
+        "category_name": "storage"
+      },
+      {
+        "code": "V13-06",
+        "title": "Знахідка хмарного аудиту 06",
+        "category_id": 3,
+        "value": 3.0,
+        "status": "in_progress",
+        "id": 6,
+        "category_name": "network"
+      },
+      {
+        "code": "V13-07",
+        "title": "Знахідка хмарного аудиту 07",
+        "category_id": 1,
+        "value": 7.0,
+        "status": "done",
+        "id": 7,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-08",
+        "title": "Знахідка хмарного аудиту 08",
+        "category_id": 2,
+        "value": 5.0,
+        "status": "new",
+        "id": 8,
+        "category_name": "storage"
+      },
+      {
+        "code": "V13-BULK1",
+        "title": "Навчальна знахідка",
+        "category_id": 1,
+        "value": 7.5,
+        "status": "new",
+        "id": 9,
+        "category_name": "iam"
+      },
+      {
+        "code": "V13-BULK2",
+        "title": "Навчальна знахідка",
+        "category_id": 2,
+        "value": 5.0,
+        "status": "new",
+        "id": 10,
+        "category_name": "storage"
+      },
+      {
+        "code": "V13-PERSIST",
+        "title": "Навчальна знахідка",
+        "category_id": 3,
+        "value": 7.5,
+        "status": "new",
+        "id": 11,
+        "category_name": "network"
+      }
+    ]
+  }
+]

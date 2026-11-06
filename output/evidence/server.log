@@ -1,0 +1,4 @@
+Порушення цілісності SQLite: UNIQUE constraint failed: records.code
+Порушення цілісності SQLite: UNIQUE constraint failed: categories.name
+Порушення цілісності SQLite: FOREIGN KEY constraint failed
+Порушення цілісності SQLite: UNIQUE constraint failed: records.code

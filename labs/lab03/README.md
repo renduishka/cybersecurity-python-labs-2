@@ -1,0 +1,87 @@
+# Лабораторна робота 3 — варіант 13
+
+**Виконавець:** Лозинський Р.Р., КБ-202.
+
+FastAPI + SQLite без ORM. Предметна область — реєстр ризиків хмарної конфігурації.
+Категорії `iam`, `storage`, `network`. `value` — скінченна навчальна оцінка ризику
+0–10, одиниця `score`, поріг 7.0. Поріг — умова вибірки `min_value=7`, а не нижня
+межа допустимих даних. `status`: `new`, `in_progress`, `done`.
+
+## Запуск
+
+Команди виконувати з кореня проєкту (Python 3.10+):
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m labs.lab03.database
+python -m labs.lab03.seed
+uvicorn labs.lab03.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+Документація: http://127.0.0.1:8000/docs, схема: http://127.0.0.1:8000/openapi.json.
+База `labs/lab03/data/lab3.sqlite3` створюється автоматично; шлях не залежить від
+поточної директорії. Seed додає 3 категорії й 8 записів лише в порожню базу.
+Повторний запуск зберігає всі дані. Для нового навчального набору використовуйте
+окрему копію проєкту або резервну копію бази.
+
+## Приклади запитів
+
+```bash
+curl -i 'http://127.0.0.1:8000/ping'
+curl -i 'http://127.0.0.1:8000/student'
+curl -i 'http://127.0.0.1:8000/categories'
+curl -i 'http://127.0.0.1:8000/records?min_value=7'
+curl -i 'http://127.0.0.1:8000/records?category_id=1&status=new&limit=5&offset=0'
+curl -i -X POST 'http://127.0.0.1:8000/records' \
+  -H 'Content-Type: application/json' \
+  -d '{"code":"V13-TEST","title":"Навчальна знахідка","category_id":1,"value":7.5,"status":"new"}'
+```
+
+Використайте `id` відповіді для `GET /records/{id}`, `PUT /records/{id}` та
+`DELETE /records/{id}`. PUT вимагає всі п’ять змінюваних полів.
+
+```bash
+curl -i -X POST 'http://127.0.0.1:8000/records/bulk' \
+  -H 'Content-Type: application/json' \
+  -d '[{"code":"V13-ROLLBACK","title":"Перший елемент","category_id":1,"value":4,"status":"new"},{"code":"V13-01","title":"Дублікат","category_id":2,"value":5,"status":"new"}]'
+```
+
+Очікується 409; `V13-ROLLBACK` не зберігається. Увесь пакет (1–100 елементів)
+перевіряється моделями й записується в одній транзакції. Відсутня категорія — 404,
+невірна модель — 422, конфлікт унікальності або непорожня категорія — 409.
+DELETE успішно повертає 204 із порожнім тілом.
+
+Усі фільтри GET /records поєднуються через AND. `q` — буквальний підрядок title,
+чутливий до регістру; `%` і `_` не є шаблонами. Порядок: id ASC; limit 1–100,
+offset ≥ 0. Неіснуючий додатний category_id у фільтрі повертає `[]`.
+
+## Перевірки
+
+```bash
+python -m unittest discover -v
+python -m tests.verify_http
+ruff check labs/lab03
+ruff format --check labs/lab03
+ruff check .
+ruff format --check .
+```
+
+Тести використовують тимчасові SQLite-файли. HTTP-перевірка запускає локальний
+сервер на порту 8013, перевіряє всі 14 сценаріїв, перезапускає процес і зберігає
+фактичні відповіді в `output/evidence/`. Робоча база не змінюється.
+
+## Розподіл коду
+
+- `database.py` — з’єднання з foreign_keys та ініціалізація незміненою схемою.
+- `repository.py` — параметризовані SQL, JOIN, CRUD, фільтри й транзакції.
+- `schemas.py` — моделі запитів, відповідей і початкового набору.
+- `seed.py`, `data/seed.json` — перевірка та атомарне заповнення.
+- `routers/` — синхронні HTTP-маршрути.
+- `main.py` — lifespan, OpenAPI, перетворення помилок SQLite та валідації.
+- `shared/student.py` — ПІБ, група, варіант без редагування sys.path.
+
+Код, schema.sql і seed.json призначені для Git; робоча SQLite-база і .venv
+ігноруються. Після перенесення у власний репозиторій ЛР 1–2 перевірте залежності
+та чинні правила Ruff, збережіть матеріали попередніх робіт і виконайте git push.
