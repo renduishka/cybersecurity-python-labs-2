@@ -630,6 +630,7 @@
       "PingRead": {
         "properties": {
           "status": {
+            "type": "string",
             "const": "ok",
             "title": "Status"
           }

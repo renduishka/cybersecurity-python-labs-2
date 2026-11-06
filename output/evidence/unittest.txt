@@ -1,4 +1,6 @@
-test_bulk_success_and_rollback (tests.test_lab03.Lab03Tests) ... Порушення цілісності SQLite: UNIQUE constraint failed: records.code
+test_bulk_success_and_rollback (tests.test_lab03.Lab03Tests) ... /Users/macbook/Desktop/labskript3/.venv/lib/python3.10/site-packages/starlette/testclient.py:45: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+  _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+Порушення цілісності SQLite: UNIQUE constraint failed: records.code
 Порушення цілісності SQLite: UNIQUE constraint failed: records.code
 ok
 test_categories (tests.test_lab03.Lab03Tests) ... Порушення цілісності SQLite: FOREIGN KEY constraint failed
@@ -17,6 +19,6 @@ test_sqlite_integer_overflow_is_validation_error (tests.test_lab03.Lab03Tests) .
 test_validation_leaves_database_unchanged (tests.test_lab03.Lab03Tests) ... ok
 
 ----------------------------------------------------------------------
-Ran 11 tests in 0.517s
+Ran 11 tests in 1.180s
 
 OK
