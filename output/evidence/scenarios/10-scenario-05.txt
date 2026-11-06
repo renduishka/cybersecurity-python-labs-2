@@ -1,0 +1,29 @@
+Сценарій 5 — Від’ємна оцінка та порожній title
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Невалідні поля
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '{"code": "V13-BAD", "title": "Навчальна знахідка", "category_id": 1, 
+"value": -1, "status": "new"}' http://127.0.0.1:8013/records
+HTTP/1.1 422 Unprocessable Entity
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 144
+content-type: application/json
+
+{"detail":[{"type":"greater_than_equal","loc":["body","value"],"msg":"Input should be greater than 
+or equal to 0","input":-1,"ctx":{"ge":0.0}}]}
+--------------------------------------------------------------------------------------------------------------
+Невалідні поля
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '{"code": "V13-BAD", "title": "   ", "category_id": 1, "value": 7.5, 
+"status": "new"}' http://127.0.0.1:8013/records
+HTTP/1.1 422 Unprocessable Entity
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 149
+content-type: application/json
+
+{"detail":[{"type":"string_too_short","loc":["body","title"],"msg":"String should have at least 3 
+characters","input":"   ","ctx":{"min_length":3}}]}
+--------------------------------------------------------------------------------------------------------------

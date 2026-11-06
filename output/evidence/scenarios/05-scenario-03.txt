@@ -1,0 +1,23 @@
+Сценарій 3 — Повна заміна та видалення запису
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Повна заміна
+curl --silent --show-error --include --noproxy 127.0.0.1 --request PUT --header 'Content-Type: 
+application/json' --data-raw '{"code": "V13-TEST", "title": "Навчальна знахідка", "category_id": 1, 
+"value": 2, "status": "done"}' http://127.0.0.1:8013/records/9
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 138
+content-type: application/json
+
+{"code":"V13-TEST","title":"Навчальна 
+знахідка","category_id":1,"value":2.0,"status":"done","id":9,"category_name":"iam"}
+--------------------------------------------------------------------------------------------------------------
+Видалення без тіла
+curl --silent --show-error --include --noproxy 127.0.0.1 --request DELETE 
+http://127.0.0.1:8013/records/9
+HTTP/1.1 204 No Content
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+--------------------------------------------------------------------------------------------------------------

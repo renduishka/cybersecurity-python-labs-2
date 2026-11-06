@@ -12,6 +12,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
 from labs.lab03 import config, database, repository
+from labs.lab03.docs import router as docs_router
 from labs.lab03.routers import categories, records
 from labs.lab03.schemas import PingRead, StudentRead
 from shared.student import GROUP_NAME, STUDENT_NAME, VARIANT_NUMBER
@@ -34,7 +35,9 @@ app = FastAPI(
     ),
     version="1.0.0",
     lifespan=lifespan,
+    docs_url=None,
 )
+app.include_router(docs_router)
 app.include_router(categories.router)
 app.include_router(records.router)
 

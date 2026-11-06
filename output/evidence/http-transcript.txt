@@ -118,14 +118,14 @@ POST /records/bulk -> HTTP 409
 {"detail": "Конфлікт даних: дублікат або категорія містить записи"}
 
 Сценарій 11: Стан після rollback
-{"count_before": 10, "count_after": 10, "first_code": "V13-ROLLBACK11", "first_code_exists": false}
+{"count_before": 10, "count_after": 10, "first_code": "V13-ROLLBACK11", "first_code_exists": false, "first_code_count": 0, "count_query": "SELECT COUNT(*) FROM records", "code_query": "SELECT COUNT(*) FROM records WHERE code = ?"}
 
 Сценарій 12: Скасування всього пакета
 POST /records/bulk -> HTTP 404
 {"detail": "Категорію не знайдено"}
 
 Сценарій 12: Стан після rollback
-{"count_before": 10, "count_after": 10, "first_code": "V13-ROLLBACK12", "first_code_exists": false}
+{"count_before": 10, "count_after": 10, "first_code": "V13-ROLLBACK12", "first_code_exists": false, "first_code_count": 0, "count_query": "SELECT COUNT(*) FROM records", "code_query": "SELECT COUNT(*) FROM records WHERE code = ?"}
 
 Сценарій 13: SQL-ін'єкція як буквальний підрядок
 GET /records?q=%27%20OR%201%3D1%20-- -> HTTP 200
@@ -134,6 +134,9 @@ GET /records?q=%27%20OR%201%3D1%20-- -> HTTP 200
 Сценарій 14: Збереження перед перезапуском
 POST /records -> HTTP 201
 {"code": "V13-PERSIST", "title": "Навчальна знахідка", "category_id": 3, "value": 7.5, "status": "new", "id": 11, "category_name": "network"}
+
+Сценарій 14: Перезапуск процесу uvicorn
+{"stopped_pid": 5341, "started_pid": 5378, "same_database_file": true}
 
 Сценарій 14: Читання після перезапуску процесу
 GET /records/11 -> HTTP 200

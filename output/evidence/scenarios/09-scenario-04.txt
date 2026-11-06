@@ -1,0 +1,26 @@
+Сценарій 4 — Пошук і фільтр без збігів
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Фільтрація та пагінація
+curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 
+'http://127.0.0.1:8013/records?q=%D0%B0%D1%83%D0%B4%D0%B8%D1%82%D1%83%2002'
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 163
+content-type: application/json
+
+[{"code":"V13-02","title":"Знахідка хмарного аудиту 
+02","category_id":2,"value":6.5,"status":"in_progress","id":2,"category_name":"storage"}]
+--------------------------------------------------------------------------------------------------------------
+Фільтрація та пагінація
+curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 
+'http://127.0.0.1:8013/records?category_id=999'
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 2
+content-type: application/json
+
+[]
+--------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,31 @@
+Сценарій 6 — Верхня межа і нескінченне значення
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Перевищення верхньої межі
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '{"code": "V13-BAD", "title": "Навчальна знахідка", "category_id": 1, 
+"value": 10.1, "status": "new"}' http://127.0.0.1:8013/records
+HTTP/1.1 422 Unprocessable Entity
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 142
+content-type: application/json
+
+{"detail":[{"type":"less_than_equal","loc":["body","value"],"msg":"Input should be less than or 
+equal to 10","input":10.1,"ctx":{"le":10.0}}]}
+--------------------------------------------------------------------------------------------------------------
+Нескінченне число у JSON
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '{"code": "V13-INF", "title": 
+"\u041d\u0430\u0432\u0447\u0430\u043b\u044c\u043d\u0430 
+\u0437\u043d\u0430\u0445\u0456\u0434\u043a\u0430", "category_id": 1, "value": 1e309, "status": 
+"new"}' http://127.0.0.1:8013/records
+HTTP/1.1 422 Unprocessable Entity
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 114
+content-type: application/json
+
+{"detail":[{"type":"finite_number","loc":["body","value"],"msg":"Input should be a finite 
+number","input":"inf"}]}
+--------------------------------------------------------------------------------------------------------------

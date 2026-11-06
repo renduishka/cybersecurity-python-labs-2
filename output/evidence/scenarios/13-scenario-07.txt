@@ -1,0 +1,26 @@
+Сценарій 7 — Неіснуючий запис і категорія
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Відсутній запис
+curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 
+http://127.0.0.1:8013/records/999
+HTTP/1.1 404 Not Found
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 45
+content-type: application/json
+
+{"detail":"Запис не знайдено"}
+--------------------------------------------------------------------------------------------------------------
+Відсутня категорія
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '{"code": "V13-NOCAT", "title": "Навчальна знахідка", "category_id": 
+999, "value": 7.5, "status": "new"}' http://127.0.0.1:8013/records
+HTTP/1.1 404 Not Found
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 53
+content-type: application/json
+
+{"detail":"Категорію не знайдено"}
+--------------------------------------------------------------------------------------------------------------

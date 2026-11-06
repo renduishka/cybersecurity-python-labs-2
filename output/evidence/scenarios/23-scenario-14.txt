@@ -1,0 +1,35 @@
+Сценарій 14 — Збереження даних після перезапуску процесу
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Збереження перед перезапуском
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '{"code": "V13-PERSIST", "title": "Навчальна знахідка", "category_id": 
+3, "value": 7.5, "status": "new"}' http://127.0.0.1:8013/records
+HTTP/1.1 201 Created
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 145
+content-type: application/json
+
+{"code":"V13-PERSIST","title":"Навчальна 
+знахідка","category_id":3,"value":7.5,"status":"new","id":11,"category_name":"network"}
+--------------------------------------------------------------------------------------------------------------
+Перезапуск процесу uvicorn
+{
+  "stopped_pid": 5341,
+  "started_pid": 5378,
+  "same_database_file": true
+}
+--------------------------------------------------------------------------------------------------------------
+Читання після перезапуску процесу
+curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 
+http://127.0.0.1:8013/records/11
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 12:30:38 GMT
+server: uvicorn
+content-length: 145
+content-type: application/json
+
+{"code":"V13-PERSIST","title":"Навчальна 
+знахідка","category_id":3,"value":7.5,"status":"new","id":11,"category_name":"network"}
+--------------------------------------------------------------------------------------------------------------

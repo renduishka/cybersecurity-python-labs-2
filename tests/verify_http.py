@@ -6,11 +6,14 @@
 
 import json
 import os
+import shlex
+import sqlite3
 import subprocess
 import sys
 import tempfile
 import time
 from pathlib import Path
+from urllib.parse import quote
 
 import httpx
 
@@ -40,6 +43,14 @@ def run_checks() -> None:
             first = seed.seed_database()
             second = seed.seed_database()
             assert first is True and second is False
+            with sqlite3.connect(db_path) as connection:
+                category_count = connection.execute(
+                    "SELECT COUNT(*) FROM categories"
+                ).fetchone()[0]
+                record_count = connection.execute(
+                    "SELECT COUNT(*) FROM records"
+                ).fetchone()[0]
+            assert category_count == 3 and record_count == 8
             evidence.append(
                 {
                     "scenario": 1,
@@ -47,8 +58,8 @@ def run_checks() -> None:
                     "result": {
                         "first_inserted": first,
                         "second_inserted": second,
-                        "categories": 3,
-                        "records": 8,
+                        "categories": category_count,
+                        "records": record_count,
                     },
                 }
             )
@@ -87,14 +98,34 @@ def run_checks() -> None:
         def request(
             scenario, label, method, path, expected, body=None, raw=None
         ):
-            kwargs = {}
-            if body is not None:
-                kwargs["json"] = body
-            if raw is not None:
-                kwargs.update(
-                    content=raw, headers={"Content-Type": "application/json"}
+            command = [
+                "curl",
+                "--silent",
+                "--show-error",
+                "--include",
+                "--noproxy",
+                "127.0.0.1",
+                "--request",
+                method,
+            ]
+            if body is not None or raw is not None:
+                payload = (
+                    raw
+                    if raw is not None
+                    else json.dumps(body, ensure_ascii=False)
                 )
-            response = client.request(method, path, **kwargs)
+                command += [
+                    "--header",
+                    "Content-Type: application/json",
+                    "--data-raw",
+                    payload,
+                ]
+            command.append(BASE_URL + quote(path, safe="/?=&%"))
+            executed = subprocess.run(command, capture_output=True, check=True)
+            raw_response = executed.stdout.decode("utf-8")
+            headers, _, content = raw_response.partition("\r\n\r\n")
+            status_code = int(headers.splitlines()[0].split()[1])
+            response = httpx.Response(status_code, content=content)
             assert response.status_code == expected, (
                 label,
                 response.status_code,
@@ -110,6 +141,8 @@ def run_checks() -> None:
                     "request": body if raw is None else raw,
                     "status": response.status_code,
                     "response": result,
+                    "curl_command": shlex.join(command),
+                    "raw_response": raw_response,
                 }
             )
             return result
@@ -248,6 +281,10 @@ def run_checks() -> None:
                 (12, record("V13-NOCAT", category_id=999), 404),
             ]:
                 before = snapshot()
+                with sqlite3.connect(db_path) as connection:
+                    count_before = connection.execute(
+                        "SELECT COUNT(*) FROM records"
+                    ).fetchone()[0]
                 first_code = f"V13-ROLLBACK{number}"
                 request(
                     number,
@@ -258,6 +295,15 @@ def run_checks() -> None:
                     [record(first_code), second_item],
                 )
                 after = snapshot()
+                with sqlite3.connect(db_path) as connection:
+                    count_after = connection.execute(
+                        "SELECT COUNT(*) FROM records"
+                    ).fetchone()[0]
+                    first_code_count = connection.execute(
+                        "SELECT COUNT(*) FROM records WHERE code = ?",
+                        (first_code,),
+                    ).fetchone()[0]
+                assert count_before == count_after and first_code_count == 0
                 assert before == after
                 assert all(row["code"] != first_code for row in after)
                 evidence.append(
@@ -265,10 +311,15 @@ def run_checks() -> None:
                         "scenario": number,
                         "label": "Стан після rollback",
                         "result": {
-                            "count_before": len(before),
-                            "count_after": len(after),
+                            "count_before": count_before,
+                            "count_after": count_after,
                             "first_code": first_code,
-                            "first_code_exists": False,
+                            "first_code_exists": bool(first_code_count),
+                            "first_code_count": first_code_count,
+                            "count_query": "SELECT COUNT(*) FROM records",
+                            "code_query": (
+                                "SELECT COUNT(*) FROM records WHERE code = ?"
+                            ),
                         },
                     }
                 )
@@ -287,9 +338,21 @@ def run_checks() -> None:
                 201,
                 record("V13-PERSIST", category_id=3),
             )
+            previous_pid = process.pid
             stop(process)
             process = None
             process = start()
+            evidence.append(
+                {
+                    "scenario": 14,
+                    "label": "Перезапуск процесу uvicorn",
+                    "result": {
+                        "stopped_pid": previous_pid,
+                        "started_pid": process.pid,
+                        "same_database_file": True,
+                    },
+                }
+            )
             restored = request(
                 14,
                 "Читання після перезапуску процесу",

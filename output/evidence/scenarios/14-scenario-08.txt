@@ -1,0 +1,26 @@
+Сценарій 8 — Дублікат code та назви категорії
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Повторний code
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '{"code": "V13-01", "title": "Навчальна знахідка", "category_id": 1, 
+"value": 7.5, "status": "new"}' http://127.0.0.1:8013/records
+HTTP/1.1 409 Conflict
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 112
+content-type: application/json
+
+{"detail":"Конфлікт даних: дублікат або категорія містить записи"}
+--------------------------------------------------------------------------------------------------------------
+Повторна назва категорії
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '{"name": "iam"}' http://127.0.0.1:8013/categories
+HTTP/1.1 409 Conflict
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 112
+content-type: application/json
+
+{"detail":"Конфлікт даних: дублікат або категорія містить записи"}
+--------------------------------------------------------------------------------------------------------------

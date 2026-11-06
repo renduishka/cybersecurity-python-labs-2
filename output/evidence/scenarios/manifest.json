@@ -1,0 +1,186 @@
+[
+  {
+    "index": 1,
+    "scenario": 1,
+    "title": "Початкове і повторне заповнення",
+    "text": "01-scenario-01.txt",
+    "image": "01-scenario-01.png",
+    "lines": 11
+  },
+  {
+    "index": 2,
+    "scenario": 1,
+    "title": "Вісім початкових записів",
+    "text": "02-scenario-01.txt",
+    "image": "02-scenario-01.png",
+    "lines": 28
+  },
+  {
+    "index": 3,
+    "scenario": 2,
+    "title": "Доступність API, студент і категорії",
+    "text": "03-scenario-02.txt",
+    "image": "03-scenario-02.png",
+    "lines": 34
+  },
+  {
+    "index": 4,
+    "scenario": 3,
+    "title": "Створення та читання запису",
+    "text": "04-scenario-03.txt",
+    "image": "04-scenario-03.png",
+    "lines": 28
+  },
+  {
+    "index": 5,
+    "scenario": 3,
+    "title": "Повна заміна та видалення запису",
+    "text": "05-scenario-03.txt",
+    "image": "05-scenario-03.png",
+    "lines": 23
+  },
+  {
+    "index": 6,
+    "scenario": 4,
+    "title": "Фільтр категорії",
+    "text": "06-scenario-04.txt",
+    "image": "06-scenario-04.png",
+    "lines": 18
+  },
+  {
+    "index": 7,
+    "scenario": 4,
+    "title": "Поріг ризику min_value=7",
+    "text": "07-scenario-04.txt",
+    "image": "07-scenario-04.png",
+    "lines": 20
+  },
+  {
+    "index": 8,
+    "scenario": 4,
+    "title": "Два фільтри та пагінація",
+    "text": "08-scenario-04.txt",
+    "image": "08-scenario-04.png",
+    "lines": 29
+  },
+  {
+    "index": 9,
+    "scenario": 4,
+    "title": "Пошук і фільтр без збігів",
+    "text": "09-scenario-04.txt",
+    "image": "09-scenario-04.png",
+    "lines": 26
+  },
+  {
+    "index": 10,
+    "scenario": 5,
+    "title": "Від’ємна оцінка та порожній title",
+    "text": "10-scenario-05.txt",
+    "image": "10-scenario-05.png",
+    "lines": 29
+  },
+  {
+    "index": 11,
+    "scenario": 5,
+    "title": "Неприпустимий status та limit=0",
+    "text": "11-scenario-05.txt",
+    "image": "11-scenario-05.png",
+    "lines": 28
+  },
+  {
+    "index": 12,
+    "scenario": 6,
+    "title": "Верхня межа і нескінченне значення",
+    "text": "12-scenario-06.txt",
+    "image": "12-scenario-06.png",
+    "lines": 31
+  },
+  {
+    "index": 13,
+    "scenario": 7,
+    "title": "Неіснуючий запис і категорія",
+    "text": "13-scenario-07.txt",
+    "image": "13-scenario-07.png",
+    "lines": 26
+  },
+  {
+    "index": 14,
+    "scenario": 8,
+    "title": "Дублікат code та назви категорії",
+    "text": "14-scenario-08.txt",
+    "image": "14-scenario-08.png",
+    "lines": 26
+  },
+  {
+    "index": 15,
+    "scenario": 9,
+    "title": "Захист непорожньої категорії",
+    "text": "15-scenario-09.txt",
+    "image": "15-scenario-09.png",
+    "lines": 14
+  },
+  {
+    "index": 16,
+    "scenario": 9,
+    "title": "Створення та видалення порожньої категорії",
+    "text": "16-scenario-09.txt",
+    "image": "16-scenario-09.png",
+    "lines": 21
+  },
+  {
+    "index": 17,
+    "scenario": 10,
+    "title": "Коректний пакет із двох записів",
+    "text": "17-scenario-10.txt",
+    "image": "17-scenario-10.png",
+    "lines": 18
+  },
+  {
+    "index": 18,
+    "scenario": 11,
+    "title": "Пакет із дублікатом другого елемента",
+    "text": "18-scenario-11.txt",
+    "image": "18-scenario-11.png",
+    "lines": 16
+  },
+  {
+    "index": 19,
+    "scenario": 11,
+    "title": "SQL до і після та відсутність першого code",
+    "text": "19-scenario-11.txt",
+    "image": "19-scenario-11.png",
+    "lines": 14
+  },
+  {
+    "index": 20,
+    "scenario": 12,
+    "title": "Пакет із неіснуючою категорією",
+    "text": "20-scenario-12.txt",
+    "image": "20-scenario-12.png",
+    "lines": 16
+  },
+  {
+    "index": 21,
+    "scenario": 12,
+    "title": "SQL до і після та відсутність першого code",
+    "text": "21-scenario-12.txt",
+    "image": "21-scenario-12.png",
+    "lines": 14
+  },
+  {
+    "index": 22,
+    "scenario": 13,
+    "title": "SQL-ін’єкція обробляється як дані",
+    "text": "22-scenario-13.txt",
+    "image": "22-scenario-13.png",
+    "lines": 14
+  },
+  {
+    "index": 23,
+    "scenario": 14,
+    "title": "Збереження даних після перезапуску процесу",
+    "text": "23-scenario-14.txt",
+    "image": "23-scenario-14.png",
+    "lines": 35
+  }
+]

@@ -1,0 +1,28 @@
+Сценарій 5 — Неприпустимий status та limit=0
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Невалідні поля
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '{"code": "V13-BAD", "title": "Навчальна знахідка", "category_id": 1, 
+"value": 7.5, "status": "invalid"}' http://127.0.0.1:8013/records
+HTTP/1.1 422 Unprocessable Entity
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 186
+content-type: application/json
+
+{"detail":[{"type":"literal_error","loc":["body","status"],"msg":"Input should be 'new', 
+'in_progress' or 'done'","input":"invalid","ctx":{"expected":"'new', 'in_progress' or 'done'"}}]}
+--------------------------------------------------------------------------------------------------------------
+Невалідний limit
+curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 
+'http://127.0.0.1:8013/records?limit=0'
+HTTP/1.1 422 Unprocessable Entity
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 144
+content-type: application/json
+
+{"detail":[{"type":"greater_than_equal","loc":["query","limit"],"msg":"Input should be greater than 
+or equal to 1","input":"0","ctx":{"ge":1}}]}
+--------------------------------------------------------------------------------------------------------------

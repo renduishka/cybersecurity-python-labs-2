@@ -18,7 +18,9 @@
     "status": 200,
     "response": {
       "status": "ok"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET http://127.0.0.1:8013/ping",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 15\r\ncontent-type: application/json\r\n\r\n{\"status\":\"ok\"}"
   },
   {
     "scenario": 2,
@@ -31,7 +33,9 @@
       "student_name": "Лозинський Ростислав Романович",
       "group_name": "КБ-202",
       "variant_number": 13
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET http://127.0.0.1:8013/student",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 121\r\ncontent-type: application/json\r\n\r\n{\"student_name\":\"Лозинський Ростислав Романович\",\"group_name\":\"КБ-202\",\"variant_number\":13}"
   },
   {
     "scenario": 2,
@@ -53,7 +57,9 @@
         "name": "network",
         "id": 3
       }
-    ]
+    ],
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET http://127.0.0.1:8013/categories",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 75\r\ncontent-type: application/json\r\n\r\n[{\"name\":\"iam\",\"id\":1},{\"name\":\"storage\",\"id\":2},{\"name\":\"network\",\"id\":3}]"
   },
   {
     "scenario": 1,
@@ -135,7 +141,9 @@
         "id": 8,
         "category_name": "storage"
       }
-    ]
+    ],
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 'http://127.0.0.1:8013/records?limit=100'",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 1240\r\ncontent-type: application/json\r\n\r\n[{\"code\":\"V13-01\",\"title\":\"Знахідка хмарного аудиту 01\",\"category_id\":1,\"value\":8.0,\"status\":\"new\",\"id\":1,\"category_name\":\"iam\"},{\"code\":\"V13-02\",\"title\":\"Знахідка хмарного аудиту 02\",\"category_id\":2,\"value\":6.5,\"status\":\"in_progress\",\"id\":2,\"category_name\":\"storage\"},{\"code\":\"V13-03\",\"title\":\"Знахідка хмарного аудиту 03\",\"category_id\":3,\"value\":4.0,\"status\":\"done\",\"id\":3,\"category_name\":\"network\"},{\"code\":\"V13-04\",\"title\":\"Знахідка хмарного аудиту 04\",\"category_id\":1,\"value\":9.0,\"status\":\"new\",\"id\":4,\"category_name\":\"iam\"},{\"code\":\"V13-05\",\"title\":\"Знахідка хмарного аудиту 05\",\"category_id\":2,\"value\":7.5,\"status\":\"done\",\"id\":5,\"category_name\":\"storage\"},{\"code\":\"V13-06\",\"title\":\"Знахідка хмарного аудиту 06\",\"category_id\":3,\"value\":3.0,\"status\":\"in_progress\",\"id\":6,\"category_name\":\"network\"},{\"code\":\"V13-07\",\"title\":\"Знахідка хмарного аудиту 07\",\"category_id\":1,\"value\":7.0,\"status\":\"done\",\"id\":7,\"category_name\":\"iam\"},{\"code\":\"V13-08\",\"title\":\"Знахідка хмарного аудиту 08\",\"category_id\":2,\"value\":5.0,\"status\":\"new\",\"id\":8,\"category_name\":\"storage\"}]"
   },
   {
     "scenario": 3,
@@ -158,7 +166,9 @@
       "status": "new",
       "id": 9,
       "category_name": "iam"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '{\"code\": \"V13-TEST\", \"title\": \"Навчальна знахідка\", \"category_id\": 1, \"value\": 7.5, \"status\": \"new\"}' http://127.0.0.1:8013/records",
+    "raw_response": "HTTP/1.1 201 Created\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 137\r\ncontent-type: application/json\r\n\r\n{\"code\":\"V13-TEST\",\"title\":\"Навчальна знахідка\",\"category_id\":1,\"value\":7.5,\"status\":\"new\",\"id\":9,\"category_name\":\"iam\"}"
   },
   {
     "scenario": 3,
@@ -175,7 +185,9 @@
       "status": "new",
       "id": 9,
       "category_name": "iam"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET http://127.0.0.1:8013/records/9",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 137\r\ncontent-type: application/json\r\n\r\n{\"code\":\"V13-TEST\",\"title\":\"Навчальна знахідка\",\"category_id\":1,\"value\":7.5,\"status\":\"new\",\"id\":9,\"category_name\":\"iam\"}"
   },
   {
     "scenario": 3,
@@ -198,7 +210,9 @@
       "status": "done",
       "id": 9,
       "category_name": "iam"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request PUT --header 'Content-Type: application/json' --data-raw '{\"code\": \"V13-TEST\", \"title\": \"Навчальна знахідка\", \"category_id\": 1, \"value\": 2, \"status\": \"done\"}' http://127.0.0.1:8013/records/9",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 138\r\ncontent-type: application/json\r\n\r\n{\"code\":\"V13-TEST\",\"title\":\"Навчальна знахідка\",\"category_id\":1,\"value\":2.0,\"status\":\"done\",\"id\":9,\"category_name\":\"iam\"}"
   },
   {
     "scenario": 3,
@@ -207,7 +221,9 @@
     "path": "/records/9",
     "request": null,
     "status": 204,
-    "response": null
+    "response": null,
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request DELETE http://127.0.0.1:8013/records/9",
+    "raw_response": "HTTP/1.1 204 No Content\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\n\r\n"
   },
   {
     "scenario": 4,
@@ -244,7 +260,9 @@
         "id": 7,
         "category_name": "iam"
       }
-    ]
+    ],
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 'http://127.0.0.1:8013/records?category_id=1'",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 452\r\ncontent-type: application/json\r\n\r\n[{\"code\":\"V13-01\",\"title\":\"Знахідка хмарного аудиту 01\",\"category_id\":1,\"value\":8.0,\"status\":\"new\",\"id\":1,\"category_name\":\"iam\"},{\"code\":\"V13-04\",\"title\":\"Знахідка хмарного аудиту 04\",\"category_id\":1,\"value\":9.0,\"status\":\"new\",\"id\":4,\"category_name\":\"iam\"},{\"code\":\"V13-07\",\"title\":\"Знахідка хмарного аудиту 07\",\"category_id\":1,\"value\":7.0,\"status\":\"done\",\"id\":7,\"category_name\":\"iam\"}]"
   },
   {
     "scenario": 4,
@@ -290,7 +308,9 @@
         "id": 7,
         "category_name": "iam"
       }
-    ]
+    ],
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 'http://127.0.0.1:8013/records?min_value=7'",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 607\r\ncontent-type: application/json\r\n\r\n[{\"code\":\"V13-01\",\"title\":\"Знахідка хмарного аудиту 01\",\"category_id\":1,\"value\":8.0,\"status\":\"new\",\"id\":1,\"category_name\":\"iam\"},{\"code\":\"V13-04\",\"title\":\"Знахідка хмарного аудиту 04\",\"category_id\":1,\"value\":9.0,\"status\":\"new\",\"id\":4,\"category_name\":\"iam\"},{\"code\":\"V13-05\",\"title\":\"Знахідка хмарного аудиту 05\",\"category_id\":2,\"value\":7.5,\"status\":\"done\",\"id\":5,\"category_name\":\"storage\"},{\"code\":\"V13-07\",\"title\":\"Знахідка хмарного аудиту 07\",\"category_id\":1,\"value\":7.0,\"status\":\"done\",\"id\":7,\"category_name\":\"iam\"}]"
   },
   {
     "scenario": 4,
@@ -318,7 +338,9 @@
         "id": 4,
         "category_name": "iam"
       }
-    ]
+    ],
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 'http://127.0.0.1:8013/records?category_id=1&status=new'",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 301\r\ncontent-type: application/json\r\n\r\n[{\"code\":\"V13-01\",\"title\":\"Знахідка хмарного аудиту 01\",\"category_id\":1,\"value\":8.0,\"status\":\"new\",\"id\":1,\"category_name\":\"iam\"},{\"code\":\"V13-04\",\"title\":\"Знахідка хмарного аудиту 04\",\"category_id\":1,\"value\":9.0,\"status\":\"new\",\"id\":4,\"category_name\":\"iam\"}]"
   },
   {
     "scenario": 4,
@@ -346,7 +368,9 @@
         "id": 4,
         "category_name": "iam"
       }
-    ]
+    ],
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 'http://127.0.0.1:8013/records?limit=2&offset=2'",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 306\r\ncontent-type: application/json\r\n\r\n[{\"code\":\"V13-03\",\"title\":\"Знахідка хмарного аудиту 03\",\"category_id\":3,\"value\":4.0,\"status\":\"done\",\"id\":3,\"category_name\":\"network\"},{\"code\":\"V13-04\",\"title\":\"Знахідка хмарного аудиту 04\",\"category_id\":1,\"value\":9.0,\"status\":\"new\",\"id\":4,\"category_name\":\"iam\"}]"
   },
   {
     "scenario": 4,
@@ -365,7 +389,9 @@
         "id": 2,
         "category_name": "storage"
       }
-    ]
+    ],
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 'http://127.0.0.1:8013/records?q=%D0%B0%D1%83%D0%B4%D0%B8%D1%82%D1%83%2002'",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 163\r\ncontent-type: application/json\r\n\r\n[{\"code\":\"V13-02\",\"title\":\"Знахідка хмарного аудиту 02\",\"category_id\":2,\"value\":6.5,\"status\":\"in_progress\",\"id\":2,\"category_name\":\"storage\"}]"
   },
   {
     "scenario": 4,
@@ -374,7 +400,9 @@
     "path": "/records?category_id=999",
     "request": null,
     "status": 200,
-    "response": []
+    "response": [],
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 'http://127.0.0.1:8013/records?category_id=999'",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 2\r\ncontent-type: application/json\r\n\r\n[]"
   },
   {
     "scenario": 5,
@@ -404,7 +432,9 @@
           }
         }
       ]
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '{\"code\": \"V13-BAD\", \"title\": \"Навчальна знахідка\", \"category_id\": 1, \"value\": -1, \"status\": \"new\"}' http://127.0.0.1:8013/records",
+    "raw_response": "HTTP/1.1 422 Unprocessable Entity\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 144\r\ncontent-type: application/json\r\n\r\n{\"detail\":[{\"type\":\"greater_than_equal\",\"loc\":[\"body\",\"value\"],\"msg\":\"Input should be greater than or equal to 0\",\"input\":-1,\"ctx\":{\"ge\":0.0}}]}"
   },
   {
     "scenario": 5,
@@ -434,7 +464,9 @@
           }
         }
       ]
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '{\"code\": \"V13-BAD\", \"title\": \"   \", \"category_id\": 1, \"value\": 7.5, \"status\": \"new\"}' http://127.0.0.1:8013/records",
+    "raw_response": "HTTP/1.1 422 Unprocessable Entity\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 149\r\ncontent-type: application/json\r\n\r\n{\"detail\":[{\"type\":\"string_too_short\",\"loc\":[\"body\",\"title\"],\"msg\":\"String should have at least 3 characters\",\"input\":\"   \",\"ctx\":{\"min_length\":3}}]}"
   },
   {
     "scenario": 5,
@@ -464,7 +496,9 @@
           }
         }
       ]
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '{\"code\": \"V13-BAD\", \"title\": \"Навчальна знахідка\", \"category_id\": 1, \"value\": 7.5, \"status\": \"invalid\"}' http://127.0.0.1:8013/records",
+    "raw_response": "HTTP/1.1 422 Unprocessable Entity\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 186\r\ncontent-type: application/json\r\n\r\n{\"detail\":[{\"type\":\"literal_error\",\"loc\":[\"body\",\"status\"],\"msg\":\"Input should be 'new', 'in_progress' or 'done'\",\"input\":\"invalid\",\"ctx\":{\"expected\":\"'new', 'in_progress' or 'done'\"}}]}"
   },
   {
     "scenario": 5,
@@ -488,7 +522,9 @@
           }
         }
       ]
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 'http://127.0.0.1:8013/records?limit=0'",
+    "raw_response": "HTTP/1.1 422 Unprocessable Entity\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 144\r\ncontent-type: application/json\r\n\r\n{\"detail\":[{\"type\":\"greater_than_equal\",\"loc\":[\"query\",\"limit\"],\"msg\":\"Input should be greater than or equal to 1\",\"input\":\"0\",\"ctx\":{\"ge\":1}}]}"
   },
   {
     "scenario": 6,
@@ -518,7 +554,9 @@
           }
         }
       ]
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '{\"code\": \"V13-BAD\", \"title\": \"Навчальна знахідка\", \"category_id\": 1, \"value\": 10.1, \"status\": \"new\"}' http://127.0.0.1:8013/records",
+    "raw_response": "HTTP/1.1 422 Unprocessable Entity\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 142\r\ncontent-type: application/json\r\n\r\n{\"detail\":[{\"type\":\"less_than_equal\",\"loc\":[\"body\",\"value\"],\"msg\":\"Input should be less than or equal to 10\",\"input\":10.1,\"ctx\":{\"le\":10.0}}]}"
   },
   {
     "scenario": 6,
@@ -539,7 +577,9 @@
           "input": "inf"
         }
       ]
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '{\"code\": \"V13-INF\", \"title\": \"\\u041d\\u0430\\u0432\\u0447\\u0430\\u043b\\u044c\\u043d\\u0430 \\u0437\\u043d\\u0430\\u0445\\u0456\\u0434\\u043a\\u0430\", \"category_id\": 1, \"value\": 1e309, \"status\": \"new\"}' http://127.0.0.1:8013/records",
+    "raw_response": "HTTP/1.1 422 Unprocessable Entity\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 114\r\ncontent-type: application/json\r\n\r\n{\"detail\":[{\"type\":\"finite_number\",\"loc\":[\"body\",\"value\"],\"msg\":\"Input should be a finite number\",\"input\":\"inf\"}]}"
   },
   {
     "scenario": 7,
@@ -550,7 +590,9 @@
     "status": 404,
     "response": {
       "detail": "Запис не знайдено"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET http://127.0.0.1:8013/records/999",
+    "raw_response": "HTTP/1.1 404 Not Found\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 45\r\ncontent-type: application/json\r\n\r\n{\"detail\":\"Запис не знайдено\"}"
   },
   {
     "scenario": 7,
@@ -567,7 +609,9 @@
     "status": 404,
     "response": {
       "detail": "Категорію не знайдено"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '{\"code\": \"V13-NOCAT\", \"title\": \"Навчальна знахідка\", \"category_id\": 999, \"value\": 7.5, \"status\": \"new\"}' http://127.0.0.1:8013/records",
+    "raw_response": "HTTP/1.1 404 Not Found\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 53\r\ncontent-type: application/json\r\n\r\n{\"detail\":\"Категорію не знайдено\"}"
   },
   {
     "scenario": 8,
@@ -584,7 +628,9 @@
     "status": 409,
     "response": {
       "detail": "Конфлікт даних: дублікат або категорія містить записи"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '{\"code\": \"V13-01\", \"title\": \"Навчальна знахідка\", \"category_id\": 1, \"value\": 7.5, \"status\": \"new\"}' http://127.0.0.1:8013/records",
+    "raw_response": "HTTP/1.1 409 Conflict\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 112\r\ncontent-type: application/json\r\n\r\n{\"detail\":\"Конфлікт даних: дублікат або категорія містить записи\"}"
   },
   {
     "scenario": 8,
@@ -597,7 +643,9 @@
     "status": 409,
     "response": {
       "detail": "Конфлікт даних: дублікат або категорія містить записи"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '{\"name\": \"iam\"}' http://127.0.0.1:8013/categories",
+    "raw_response": "HTTP/1.1 409 Conflict\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 112\r\ncontent-type: application/json\r\n\r\n{\"detail\":\"Конфлікт даних: дублікат або категорія містить записи\"}"
   },
   {
     "scenario": 9,
@@ -608,7 +656,9 @@
     "status": 409,
     "response": {
       "detail": "Конфлікт даних: дублікат або категорія містить записи"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request DELETE http://127.0.0.1:8013/categories/1",
+    "raw_response": "HTTP/1.1 409 Conflict\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 112\r\ncontent-type: application/json\r\n\r\n{\"detail\":\"Конфлікт даних: дублікат або категорія містить записи\"}"
   },
   {
     "scenario": 9,
@@ -622,7 +672,9 @@
     "response": {
       "name": "temporary",
       "id": 4
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '{\"name\": \"temporary\"}' http://127.0.0.1:8013/categories",
+    "raw_response": "HTTP/1.1 201 Created\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 27\r\ncontent-type: application/json\r\n\r\n{\"name\":\"temporary\",\"id\":4}"
   },
   {
     "scenario": 9,
@@ -631,7 +683,9 @@
     "path": "/categories/4",
     "request": null,
     "status": 204,
-    "response": null
+    "response": null,
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request DELETE http://127.0.0.1:8013/categories/4",
+    "raw_response": "HTTP/1.1 204 No Content\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\n\r\n"
   },
   {
     "scenario": 10,
@@ -674,7 +728,9 @@
         "id": 10,
         "category_name": "storage"
       }
-    ]
+    ],
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '[{\"code\": \"V13-BULK1\", \"title\": \"Навчальна знахідка\", \"category_id\": 1, \"value\": 7.5, \"status\": \"new\"}, {\"code\": \"V13-BULK2\", \"title\": \"Навчальна знахідка\", \"category_id\": 2, \"value\": 5, \"status\": \"new\"}]' http://127.0.0.1:8013/records/bulk",
+    "raw_response": "HTTP/1.1 201 Created\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 284\r\ncontent-type: application/json\r\n\r\n[{\"code\":\"V13-BULK1\",\"title\":\"Навчальна знахідка\",\"category_id\":1,\"value\":7.5,\"status\":\"new\",\"id\":9,\"category_name\":\"iam\"},{\"code\":\"V13-BULK2\",\"title\":\"Навчальна знахідка\",\"category_id\":2,\"value\":5.0,\"status\":\"new\",\"id\":10,\"category_name\":\"storage\"}]"
   },
   {
     "scenario": 11,
@@ -700,7 +756,9 @@
     "status": 409,
     "response": {
       "detail": "Конфлікт даних: дублікат або категорія містить записи"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '[{\"code\": \"V13-ROLLBACK11\", \"title\": \"Навчальна знахідка\", \"category_id\": 1, \"value\": 7.5, \"status\": \"new\"}, {\"code\": \"V13-01\", \"title\": \"Навчальна знахідка\", \"category_id\": 1, \"value\": 7.5, \"status\": \"new\"}]' http://127.0.0.1:8013/records/bulk",
+    "raw_response": "HTTP/1.1 409 Conflict\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 112\r\ncontent-type: application/json\r\n\r\n{\"detail\":\"Конфлікт даних: дублікат або категорія містить записи\"}"
   },
   {
     "scenario": 11,
@@ -709,7 +767,10 @@
       "count_before": 10,
       "count_after": 10,
       "first_code": "V13-ROLLBACK11",
-      "first_code_exists": false
+      "first_code_exists": false,
+      "first_code_count": 0,
+      "count_query": "SELECT COUNT(*) FROM records",
+      "code_query": "SELECT COUNT(*) FROM records WHERE code = ?"
     }
   },
   {
@@ -736,7 +797,9 @@
     "status": 404,
     "response": {
       "detail": "Категорію не знайдено"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '[{\"code\": \"V13-ROLLBACK12\", \"title\": \"Навчальна знахідка\", \"category_id\": 1, \"value\": 7.5, \"status\": \"new\"}, {\"code\": \"V13-NOCAT\", \"title\": \"Навчальна знахідка\", \"category_id\": 999, \"value\": 7.5, \"status\": \"new\"}]' http://127.0.0.1:8013/records/bulk",
+    "raw_response": "HTTP/1.1 404 Not Found\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 53\r\ncontent-type: application/json\r\n\r\n{\"detail\":\"Категорію не знайдено\"}"
   },
   {
     "scenario": 12,
@@ -745,7 +808,10 @@
       "count_before": 10,
       "count_after": 10,
       "first_code": "V13-ROLLBACK12",
-      "first_code_exists": false
+      "first_code_exists": false,
+      "first_code_count": 0,
+      "count_query": "SELECT COUNT(*) FROM records",
+      "code_query": "SELECT COUNT(*) FROM records WHERE code = ?"
     }
   },
   {
@@ -755,7 +821,9 @@
     "path": "/records?q=%27%20OR%201%3D1%20--",
     "request": null,
     "status": 200,
-    "response": []
+    "response": [],
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 'http://127.0.0.1:8013/records?q=%27%20OR%201%3D1%20--'",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 2\r\ncontent-type: application/json\r\n\r\n[]"
   },
   {
     "scenario": 14,
@@ -778,6 +846,17 @@
       "status": "new",
       "id": 11,
       "category_name": "network"
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: application/json' --data-raw '{\"code\": \"V13-PERSIST\", \"title\": \"Навчальна знахідка\", \"category_id\": 3, \"value\": 7.5, \"status\": \"new\"}' http://127.0.0.1:8013/records",
+    "raw_response": "HTTP/1.1 201 Created\r\ndate: Fri, 06 Nov 2026 12:30:37 GMT\r\nserver: uvicorn\r\ncontent-length: 145\r\ncontent-type: application/json\r\n\r\n{\"code\":\"V13-PERSIST\",\"title\":\"Навчальна знахідка\",\"category_id\":3,\"value\":7.5,\"status\":\"new\",\"id\":11,\"category_name\":\"network\"}"
+  },
+  {
+    "scenario": 14,
+    "label": "Перезапуск процесу uvicorn",
+    "result": {
+      "stopped_pid": 5341,
+      "started_pid": 5378,
+      "same_database_file": true
     }
   },
   {
@@ -795,7 +874,9 @@
       "status": "new",
       "id": 11,
       "category_name": "network"
-    }
+    },
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET http://127.0.0.1:8013/records/11",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:38 GMT\r\nserver: uvicorn\r\ncontent-length: 145\r\ncontent-type: application/json\r\n\r\n{\"code\":\"V13-PERSIST\",\"title\":\"Навчальна знахідка\",\"category_id\":3,\"value\":7.5,\"status\":\"new\",\"id\":11,\"category_name\":\"network\"}"
   },
   {
     "scenario": 14,
@@ -904,6 +985,8 @@
         "id": 11,
         "category_name": "network"
       }
-    ]
+    ],
+    "curl_command": "curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 'http://127.0.0.1:8013/records?limit=100'",
+    "raw_response": "HTTP/1.1 200 OK\r\ndate: Fri, 06 Nov 2026 12:30:38 GMT\r\nserver: uvicorn\r\ncontent-length: 1669\r\ncontent-type: application/json\r\n\r\n[{\"code\":\"V13-01\",\"title\":\"Знахідка хмарного аудиту 01\",\"category_id\":1,\"value\":8.0,\"status\":\"new\",\"id\":1,\"category_name\":\"iam\"},{\"code\":\"V13-02\",\"title\":\"Знахідка хмарного аудиту 02\",\"category_id\":2,\"value\":6.5,\"status\":\"in_progress\",\"id\":2,\"category_name\":\"storage\"},{\"code\":\"V13-03\",\"title\":\"Знахідка хмарного аудиту 03\",\"category_id\":3,\"value\":4.0,\"status\":\"done\",\"id\":3,\"category_name\":\"network\"},{\"code\":\"V13-04\",\"title\":\"Знахідка хмарного аудиту 04\",\"category_id\":1,\"value\":9.0,\"status\":\"new\",\"id\":4,\"category_name\":\"iam\"},{\"code\":\"V13-05\",\"title\":\"Знахідка хмарного аудиту 05\",\"category_id\":2,\"value\":7.5,\"status\":\"done\",\"id\":5,\"category_name\":\"storage\"},{\"code\":\"V13-06\",\"title\":\"Знахідка хмарного аудиту 06\",\"category_id\":3,\"value\":3.0,\"status\":\"in_progress\",\"id\":6,\"category_name\":\"network\"},{\"code\":\"V13-07\",\"title\":\"Знахідка хмарного аудиту 07\",\"category_id\":1,\"value\":7.0,\"status\":\"done\",\"id\":7,\"category_name\":\"iam\"},{\"code\":\"V13-08\",\"title\":\"Знахідка хмарного аудиту 08\",\"category_id\":2,\"value\":5.0,\"status\":\"new\",\"id\":8,\"category_name\":\"storage\"},{\"code\":\"V13-BULK1\",\"title\":\"Навчальна знахідка\",\"category_id\":1,\"value\":7.5,\"status\":\"new\",\"id\":9,\"category_name\":\"iam\"},{\"code\":\"V13-BULK2\",\"title\":\"Навчальна знахідка\",\"category_id\":2,\"value\":5.0,\"status\":\"new\",\"id\":10,\"category_name\":\"storage\"},{\"code\":\"V13-PERSIST\",\"title\":\"Навчальна знахідка\",\"category_id\":3,\"value\":7.5,\"status\":\"new\",\"id\":11,\"category_name\":\"network\"}]"
   }
 ]

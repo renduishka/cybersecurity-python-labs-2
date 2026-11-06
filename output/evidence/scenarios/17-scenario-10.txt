@@ -1,0 +1,18 @@
+Сценарій 10 — Коректний пакет із двох записів
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Коректний пакет
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '[{"code": "V13-BULK1", "title": "Навчальна знахідка", "category_id": 
+1, "value": 7.5, "status": "new"}, {"code": "V13-BULK2", "title": "Навчальна знахідка", 
+"category_id": 2, "value": 5, "status": "new"}]' http://127.0.0.1:8013/records/bulk
+HTTP/1.1 201 Created
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 284
+content-type: application/json
+
+[{"code":"V13-BULK1","title":"Навчальна 
+знахідка","category_id":1,"value":7.5,"status":"new","id":9,"category_name":"iam"},{"code":"V13-BULK2","title":"Навчальна
+ знахідка","category_id":2,"value":5.0,"status":"new","id":10,"category_name":"storage"}]
+--------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,21 @@
+Сценарій 9 — Створення та видалення порожньої категорії
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Створення порожньої категорії
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '{"name": "temporary"}' http://127.0.0.1:8013/categories
+HTTP/1.1 201 Created
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 27
+content-type: application/json
+
+{"name":"temporary","id":4}
+--------------------------------------------------------------------------------------------------------------
+Видалення порожньої категорії
+curl --silent --show-error --include --noproxy 127.0.0.1 --request DELETE 
+http://127.0.0.1:8013/categories/4
+HTTP/1.1 204 No Content
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+--------------------------------------------------------------------------------------------------------------

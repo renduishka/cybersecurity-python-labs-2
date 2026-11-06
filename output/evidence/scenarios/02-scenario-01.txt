@@ -1,0 +1,28 @@
+Сценарій 1 — Вісім початкових записів
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Початкові 8 знахідок
+curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 
+'http://127.0.0.1:8013/records?limit=100'
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 1240
+content-type: application/json
+
+[{"code":"V13-01","title":"Знахідка хмарного аудиту 
+01","category_id":1,"value":8.0,"status":"new","id":1,"category_name":"iam"},{"code":"V13-02","title":"Знахідка
+ хмарного аудиту 
+02","category_id":2,"value":6.5,"status":"in_progress","id":2,"category_name":"storage"},{"code":"V13-03","title":"Знахідка
+ хмарного аудиту 
+03","category_id":3,"value":4.0,"status":"done","id":3,"category_name":"network"},{"code":"V13-04","title":"Знахідка
+ хмарного аудиту 
+04","category_id":1,"value":9.0,"status":"new","id":4,"category_name":"iam"},{"code":"V13-05","title":"Знахідка
+ хмарного аудиту 
+05","category_id":2,"value":7.5,"status":"done","id":5,"category_name":"storage"},{"code":"V13-06","title":"Знахідка
+ хмарного аудиту 
+06","category_id":3,"value":3.0,"status":"in_progress","id":6,"category_name":"network"},{"code":"V13-07","title":"Знахідка
+ хмарного аудиту 
+07","category_id":1,"value":7.0,"status":"done","id":7,"category_name":"iam"},{"code":"V13-08","title":"Знахідка
+ хмарного аудиту 08","category_id":2,"value":5.0,"status":"new","id":8,"category_name":"storage"}]
+--------------------------------------------------------------------------------------------------------------

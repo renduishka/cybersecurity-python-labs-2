@@ -1,0 +1,29 @@
+Сценарій 4 — Два фільтри та пагінація
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Фільтрація та пагінація
+curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 
+'http://127.0.0.1:8013/records?category_id=1&status=new'
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 301
+content-type: application/json
+
+[{"code":"V13-01","title":"Знахідка хмарного аудиту 
+01","category_id":1,"value":8.0,"status":"new","id":1,"category_name":"iam"},{"code":"V13-04","title":"Знахідка
+ хмарного аудиту 04","category_id":1,"value":9.0,"status":"new","id":4,"category_name":"iam"}]
+--------------------------------------------------------------------------------------------------------------
+Фільтрація та пагінація
+curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 
+'http://127.0.0.1:8013/records?limit=2&offset=2'
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 306
+content-type: application/json
+
+[{"code":"V13-03","title":"Знахідка хмарного аудиту 
+03","category_id":3,"value":4.0,"status":"done","id":3,"category_name":"network"},{"code":"V13-04","title":"Знахідка
+ хмарного аудиту 04","category_id":1,"value":9.0,"status":"new","id":4,"category_name":"iam"}]
+--------------------------------------------------------------------------------------------------------------

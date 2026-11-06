@@ -1,0 +1,34 @@
+Сценарій 2 — Доступність API, студент і категорії
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Перевірка доступності
+curl --silent --show-error --include --noproxy 127.0.0.1 --request GET http://127.0.0.1:8013/ping
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 15
+content-type: application/json
+
+{"status":"ok"}
+--------------------------------------------------------------------------------------------------------------
+Дані студента
+curl --silent --show-error --include --noproxy 127.0.0.1 --request GET http://127.0.0.1:8013/student
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 121
+content-type: application/json
+
+{"student_name":"Лозинський Ростислав Романович","group_name":"КБ-202","variant_number":13}
+--------------------------------------------------------------------------------------------------------------
+Напрями аудиту
+curl --silent --show-error --include --noproxy 127.0.0.1 --request GET 
+http://127.0.0.1:8013/categories
+HTTP/1.1 200 OK
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 75
+content-type: application/json
+
+[{"name":"iam","id":1},{"name":"storage","id":2},{"name":"network","id":3}]
+--------------------------------------------------------------------------------------------------------------

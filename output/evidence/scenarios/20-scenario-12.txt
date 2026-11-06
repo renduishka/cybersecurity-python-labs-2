@@ -1,0 +1,16 @@
+Сценарій 12 — Пакет із неіснуючою категорією
+Протокол фактичних перевірок • 06.11.2026 • варіант 13
+==============================================================================================================
+Скасування всього пакета
+curl --silent --show-error --include --noproxy 127.0.0.1 --request POST --header 'Content-Type: 
+application/json' --data-raw '[{"code": "V13-ROLLBACK12", "title": "Навчальна знахідка", 
+"category_id": 1, "value": 7.5, "status": "new"}, {"code": "V13-NOCAT", "title": "Навчальна 
+знахідка", "category_id": 999, "value": 7.5, "status": "new"}]' http://127.0.0.1:8013/records/bulk
+HTTP/1.1 404 Not Found
+date: Fri, 06 Nov 2026 12:30:37 GMT
+server: uvicorn
+content-length: 53
+content-type: application/json
+
+{"detail":"Категорію не знайдено"}
+--------------------------------------------------------------------------------------------------------------
